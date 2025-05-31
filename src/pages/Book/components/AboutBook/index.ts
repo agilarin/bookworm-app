@@ -1,0 +1,1 @@
+export {AboutBook} from "./AboutBook.tsx";
