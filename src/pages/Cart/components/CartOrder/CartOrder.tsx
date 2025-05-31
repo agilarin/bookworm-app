@@ -1,7 +1,22 @@
-import {Box, Paper, Button, Typography, Stack} from "@mui/material";
+import { Box, Paper, Button, Stack } from "@mui/material";
+import { CartOrderRow } from "./components/CartOrderRow";
+import { CartType } from "@/types";
 
+interface CartOrderProps {
+  cart: CartType;
+}
 
-export function CartSidebar() {
+export function CartOrder({ cart }: CartOrderProps) {
+  let totalPrice = 0;
+  let totalCount = 0;
+
+  cart.items?.forEach((item) => {
+    if (item.book) {
+      totalCount += item.quantity;
+      totalPrice += item.book.price * item.quantity;
+    }
+  });
+
   return (
     <Paper elevation={0}>
       <Box
@@ -13,31 +28,15 @@ export function CartSidebar() {
           spacing={1}
           marginBottom={2}
         >
-
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-        >
-          <Typography fontSize={14} fontWeight={500} color="textSecondary">
-            Товары, 1 шт.
-          </Typography>
-          <Typography fontSize={14} fontWeight={500} color="textSecondary">
-            1 061 ₽
-          </Typography>
-        </Stack>
-
-          <Stack
-            direction="row"
-            justifyContent="space-between"
-          >
-            <Typography variant="body1" fontSize={24} fontWeight={500}>
-              Итого
-            </Typography>
-            <Typography variant="body1" fontSize={24} fontWeight={500}>
-              1 061 ₽
-            </Typography>
-          </Stack>
-
+          <CartOrderRow
+            name={`Книги, ${totalCount} шт.`}
+            value={`${totalPrice} ₽`}
+          />
+          <CartOrderRow
+            variant="total"
+            name="Итого"
+            value={`${totalPrice} ₽`}
+          />
         </Stack>
 
         <Button
@@ -48,7 +47,6 @@ export function CartSidebar() {
         >
           Перейти к оформлению
         </Button>
-
       </Box>
     </Paper>
   );

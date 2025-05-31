@@ -1,1 +1,1 @@
-export {CartSidebar} from "./CartSidebar.tsx";
+export {CartOrder} from "./CartOrder.tsx";
