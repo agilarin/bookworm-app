@@ -20,11 +20,8 @@ export function SearchResultItem({ book, onClick }: SearchResultItemProps) {
       padding={1}
       gap={1.5}
       borderRadius={1}
-      sx={(theme) => ({
-        ":hover": { bgcolor: theme.palette.grey[200] },
-      })}
+      sx={{ ":hover": { bgcolor: "grey.200" } }}
     >
-      {/* <Stack width={60} height={80} direction="row" justifyContent="center"> */}
       <ImagePicture
         images={book.images}
         defaultCover="cover_100"
@@ -37,12 +34,12 @@ export function SearchResultItem({ book, onClick }: SearchResultItemProps) {
             minWidth={52}
             width={52}
             minHeight={75}
-            bgcolor={(theme) => theme.palette.grey[100]}
+            bgcolor="grey.300"
+            sx={{ objectFit: "cover", aspectRatio: "2 / 3" }}
           />
         )}
       />
 
-      {/* </Stack> */}
       <Stack minHeight={44}>
         <Typography
           fontSize={14}

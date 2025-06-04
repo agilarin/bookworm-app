@@ -1,12 +1,11 @@
 import { generatePath, Link } from "react-router";
-import { Typography, Stack, useMediaQuery } from "@mui/material";
+import { Typography, Stack, useMediaQuery, Box } from "@mui/material";
 import { CartItemType } from "@/types";
 import { ROUTES_PATHS } from "@/constants";
 import { Counter } from "@/pages/Cart/components/Counter";
 import { CartItemInfo } from "./components/CartItemInfo";
 import { CartItemActions } from "./components/CartItemActions";
 import { ImagePicture } from "@/components/ImagePicture";
-import * as S from "./CartItem.styles.ts";
 
 interface CartItemProps {
   item: CartItemType;
@@ -44,9 +43,14 @@ export function CartItem({ item }: CartItemProps) {
             images={book.images}
             defaultCover="cover_100"
             imageEl={(img) => (
-              <S.Image
+              <Box
+                component="img"
                 src={img}
                 alt={book.title}
+                borderRadius={1}
+                width={90}
+                sx={{ objectFit: "cover", aspectRatio: "2 / 3" }}
+                bgcolor="grey.300"
               />
             )}
           />

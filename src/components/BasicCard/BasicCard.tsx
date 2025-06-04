@@ -12,7 +12,7 @@ export function BasicCard({ book }: BasicCardProps) {
   return (
     <Card
       elevation={0}
-      sx={{ maxWidth: 180 }}
+      sx={{ maxWidth: 180, width: 1 }}
     >
       <Link to={generatePath(ROUTES_PATHS.BOOK, { bookId: book.id })}>
         <ImagePicture
@@ -24,8 +24,11 @@ export function BasicCard({ book }: BasicCardProps) {
               component="img"
               image={img}
               alt={book.title}
-              sx={{ borderRadius: 1 }}
-              // sx={{ borderRadius: 1, height: "270px" }}
+              sx={{
+                borderRadius: 1,
+                aspectRatio: "2 / 3",
+                bgcolor: "grey.300",
+              }}
             />
           )}
         />
