@@ -1,54 +1,77 @@
-# React + TypeScript + Vite
+# BookWorm
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+BookWorm - это веб приложение интернет-магазина книг. На нем можно найти интересующие вас книги и добавить их себе в корзину.
 
-Currently, two official plugins are available:
+## Содержание
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. [Демонстрация](#демонстрация)
+2. [Технологии](#технологии)
+3. [Скриншоты](#скриншоты)
+4. [Быстрый старт](#быстрый-старт)
 
-## Expanding the ESLint configuration
+## Демонстрация
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Демострация проекта здесь: [BookWorm demo](https://vlagris.github.io/bookworm-app/)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Технологии
+
+- TypeScript
+- React
+- React-router
+- Redux-toolkit
+- Material UI
+- Firebase
+
+## Скриншоты
+
+<div align="center">
+  <img alt="Home page" src="https://github.com/vlagris/bookworm-app/blob/main/screenshots/home.png">
+  <p><i>Главная страница</i></p>
+  <img alt="Catalog page" src="https://github.com/vlagris/bookworm-app/blob/main/screenshots/catalog.png">
+  <p><i>Страница каталога</i></p>
+  <img alt="Cart page" src="https://github.com/vlagris/bookworm-app/blob/main/screenshots/cart.png">
+  <p><i>Страница карзины</i></p>
+  <img alt="Search" src="https://github.com/vlagris/bookworm-app/blob/main/screenshots/search.png">
+  <p><i>Поиск</i></p>
+  <img alt="Card page" src="https://github.com/vlagris/bookworm-app/blob/main/screenshots/card.png">
+  <p><i>Страница книги</i></p>
+</div>
+
+## Быстрый старт
+
+#### Клонирование репозитория
+
+```
+git clone https://github.com/vlagris/bookworm-app.git
+cd bookworm-app
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+#### npm
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Установить зависимости проекта:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
 ```
+npm install
+```
+
+Запустить проект:
+
+```
+npm run dev
+```
+
+#### pnpm
+
+Установить зависимости проекта:
+
+```
+pnpm install
+```
+
+Запустить проект:
+
+```
+pnpm run dev
+```
+
+Откройте http://localhost:5173 в вашем браузере, чтобы просмотреть проект.
