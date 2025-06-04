@@ -25,15 +25,27 @@ export function Cart() {
   }, [cart, books]);
 
   if (isLoading) {
-    return <FullPageLoader />;
+    return (
+      <>
+        <title>Карзина</title>
+        <FullPageLoader />
+      </>
+    );
   }
 
   if (!cart || !cart.items.length) {
-    return <EmptyCart />;
+    return (
+      <>
+        <title>Карзина</title>
+        <EmptyCart />
+      </>
+    );
   }
 
   return (
     <Container disableGutters={isDownMD}>
+      <title>Карзина</title>
+
       <Grid
         container
         position="relative"

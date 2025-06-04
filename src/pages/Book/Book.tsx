@@ -1,4 +1,3 @@
-// import { useMemo } from "react";
 import { useParams } from "react-router";
 import {
   Container,
@@ -9,7 +8,6 @@ import {
   Stack,
 } from "@mui/material";
 import { BookContent } from "@/pages/Book/components/BookContent";
-// import { books } from "@/data";
 import { ImagePicture } from "@/components/ImagePicture";
 import * as S from "./Book.styles.ts";
 import { RatingInfo } from "./components/RatingInfo/RatingInfo.tsx";
@@ -20,15 +18,19 @@ export function Book() {
   const isDownMD = useMediaQuery((theme) => theme.breakpoints.down("md"));
   const { bookId } = useParams();
   const { data: book, isLoading } = useGetBookQuery(bookId || "");
-
-  // const book = useMemo(() => {
-  //   return books.find((book) => {
-  //     return book.id === bookId;
-  //   });
-  // }, [bookId]);
+  const authorsNames = book?.authors.map((item) => item.name).join(" ,");
+  const title = [
+    book?.title,
+    authorsNames && `(${authorsNames})`,
+    "- BookWorm",
+  ].join(" ");
 
   if (isLoading || !book) {
-    return <FullPageLoader />;
+    return (
+      <>
+        <FullPageLoader />
+      </>
+    );
   }
 
   if (!book) {
@@ -40,6 +42,8 @@ export function Book() {
       disableGutters={isDownMD}
       sx={{ my: 3 }}
     >
+      <title>{title}</title>
+
       <Grid
         container
         gap={{ md: 3 }}

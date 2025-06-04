@@ -17,6 +17,8 @@ export function Home() {
 
   return (
     <Container>
+      <title>BookWorm - интернет магазин книг</title>
+
       <Stack
         spacing="20px"
         paddingY={2}

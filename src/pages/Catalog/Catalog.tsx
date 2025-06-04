@@ -10,9 +10,17 @@ export function Catalog() {
   const matches = useMediaQuery((theme) => theme.breakpoints.up("md"));
   const { genre, books, isLoading, nextPage, prevPage, pages, currentPage } =
     useFetchGenreAndBooks();
+  const title = ["Книги", genre && `в жанре ${genre.name}`, "- BookWorm"].join(
+    " "
+  );
 
   if (isLoading) {
-    return <FullPageLoader />;
+    return (
+      <>
+        <title>{title}</title>
+        <FullPageLoader />
+      </>
+    );
   }
 
   if (!books) {
@@ -21,6 +29,8 @@ export function Catalog() {
 
   return (
     <Container>
+      <title>{title}</title>
+
       <Grid
         container
         position="relative"
