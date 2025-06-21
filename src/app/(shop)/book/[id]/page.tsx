@@ -10,6 +10,7 @@ import { MediaQuery } from "@/components/MediaQuery";
 import { RatingInfo } from "./_components/RatingInfo";
 import { BookContent } from "./_components/BookContent";
 import * as S from "./Book.styles";
+import { notFound } from "next/navigation";
 
 type BookParams = Promise<{ id: string }>;
 
@@ -22,6 +23,10 @@ export async function generateMetadata({
 }: GenerateMetadataProps<BookParams>) {
   const { id } = await params;
   const book = await getBookById(id);
+  if (!book) {
+    notFound();
+  }
+
   const authorsNames = book?.authors.map((item) => item.name).join(" ,");
 
   const title = [
@@ -36,6 +41,9 @@ export async function generateMetadata({
 export default async function Book({ params }: BookProps) {
   const { id } = await params;
   const book = await getBookById(id);
+  if (!book) {
+    notFound();
+  }
   const authors = book?.authors.map((author) => author.name).join(", ");
 
   return (

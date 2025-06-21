@@ -1,10 +1,11 @@
+import { notFound } from "next/navigation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { BooksSortFieldValues, GenerateMetadataProps } from "@/types";
-import { MediaQuery } from "@/components/MediaQuery";
 import { getBooks } from "@/lib/firebase/books";
 import { getGenreById, getGenresList } from "@/lib/firebase/genres";
+import { MediaQuery } from "@/components/MediaQuery";
 import { Filter } from "./_components/Filter";
 import { ItemList } from "./_components/ItemList";
 import { CatalogHeader } from "./_components/CatalogHeader";
@@ -44,6 +45,9 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
   let genre;
   if (slug) {
     genre = await getGenreById(slug[0]);
+  }
+  if (slug && !genre) {
+    notFound();
   }
   const genresList = await getGenresList();
   const { pages, books } = await getBooks({

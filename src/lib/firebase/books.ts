@@ -73,6 +73,11 @@ export const getBookById = unstable_cache(
   async (id: string) => {
     try {
       const bookSnap = await booksRef.doc(id).get();
+
+      if (!bookSnap.exists) {
+        return;
+      }
+
       return {
         id: bookSnap.id,
         ...bookSnap.data(),
