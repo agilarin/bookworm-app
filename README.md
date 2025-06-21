@@ -11,13 +11,13 @@ BookWorm - это веб приложение интернет-магазина 
 
 ## Демонстрация
 
-Демострация проекта здесь: [BookWorm demo](https://vlagris.github.io/bookworm-app/)
+Демострация проекта здесь: [BookWorm demo](https://bookworm-agilarin.netlify.app/)
 
 ## Технологии
 
 - TypeScript
 - React
-- React-router
+- Next.js
 - Redux-toolkit
 - Material UI
 - Firebase

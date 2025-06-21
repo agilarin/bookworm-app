@@ -1,6 +1,8 @@
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
-import { generatePath, Link } from "react-router";
-import { ROUTES_PATHS } from "@/constants";
+import Link from "next/link";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
 import { BookType } from "@/types";
 import { ImagePicture } from "../ImagePicture";
 
@@ -9,12 +11,14 @@ interface BasicCardProps {
 }
 
 export function BasicCard({ book }: BasicCardProps) {
+  const authors = book.authors.map((author) => author.name).join(", ");
+
   return (
     <Card
       elevation={0}
       sx={{ maxWidth: 180, width: 1 }}
     >
-      <Link to={generatePath(ROUTES_PATHS.BOOK, { bookId: book.id })}>
+      <Link href={`/book/${book.id}`}>
         <ImagePicture
           images={book.images}
           covers={["cover_200", "cover_330"]}
@@ -58,7 +62,7 @@ export function BasicCard({ book }: BasicCardProps) {
             }}
             noWrap
           >
-            {book.authors.map((author) => author.name).join(", ")}
+            {authors}
           </Typography>
         </CardContent>
         <div></div>

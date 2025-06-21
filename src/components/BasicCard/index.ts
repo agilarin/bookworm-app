@@ -1,1 +1,1 @@
-export {BasicCard} from "./BasicCard.tsx";
+export { BasicCard } from "./BasicCard";

@@ -1,5 +1,6 @@
-import { css } from "@mui/material";
+"use client"
 
+import { css } from "@mui/material";
 
 export const reset = css(
   `

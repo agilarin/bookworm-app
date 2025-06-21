@@ -1,4 +1,4 @@
-import { OrderByDirection } from "firebase/firestore";
+import { OrderByDirection } from "firebase-admin/firestore";
 import { BooksSortFieldValues } from "@/types";
 
 export const BOOK_SORT_ARRAY: { name: string; value: BooksSortFieldValues }[] =

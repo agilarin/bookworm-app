@@ -1,8 +1,4 @@
 export * from "./bookSort";
 
-export const ROUTES_PATHS = {
-  ROOT: "/",
-  CATALOG: "/catalog/:genreSlug?",
-  BOOK: "/book/:bookId",
-  CART: "/cart",
-};
+export const LIMIT = 30;
+export const SEARCH_LIMIT = 10;

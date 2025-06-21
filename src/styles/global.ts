@@ -1,6 +1,7 @@
+"use client"
+
 import {css} from "@emotion/react";
 import {grey} from "@mui/material/colors";
-
 
 export const global = css`
   body {

@@ -10,9 +10,7 @@ import {
   REGISTER,
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { bookApi } from "./services/bookApi.ts";
-import { genresApi } from "./services/genresApi.ts";
-import { cartSlice } from "./cartSlice.ts";
+import { cartSlice } from "./cartSlice";
 
 const persistConfig = {
   key: "root",
@@ -23,8 +21,6 @@ const persistConfig = {
 
 const rootReducer = combineReducers({
   [cartSlice.reducerPath]: cartSlice.reducer,
-  [bookApi.reducerPath]: bookApi.reducer,
-  [genresApi.reducerPath]: genresApi.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -36,7 +32,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(bookApi.middleware, genresApi.middleware),
+    }).concat(),
 });
 
 setupListeners(store.dispatch);

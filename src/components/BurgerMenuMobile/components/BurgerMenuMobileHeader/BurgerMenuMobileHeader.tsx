@@ -1,4 +1,9 @@
-import { ButtonBase, IconButton, Stack, Typography } from "@mui/material";
+"use client";
+
+import Stack from "@mui/material/Stack";
+import ButtonBase from "@mui/material/ButtonBase";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
 import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 

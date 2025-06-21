@@ -1,4 +1,4 @@
-import { FieldValue } from "firebase/firestore";
+import { FieldValue } from "firebase-admin/firestore";
 import { BookType } from "./book";
 
 export type CartItemType = {

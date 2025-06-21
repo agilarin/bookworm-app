@@ -1,65 +1,69 @@
+"use client";
+
 import { useState } from "react";
-import { generatePath, Link, useMatch } from "react-router";
-import { BottomNavigation, useMediaQuery } from "@mui/material";
-import { ROUTES_PATHS } from "@/constants";
-import { BurgerMenuMobile } from "../BurgerMenuMobile";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { GenreType } from "@/types";
+import BottomNavigation from "@mui/material/BottomNavigation";
 import ManageSearchRoundedIcon from "@mui/icons-material/ManageSearchRounded";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
+import { BurgerMenuMobile } from "../BurgerMenuMobile";
+import { MediaQuery } from "../MediaQuery";
 import * as S from "./NavbarBottom.styles";
 
-export function NavbarBottom() {
+interface NavbarBottomProps {
+  genreList: GenreType[];
+}
+
+export function NavbarBottom({ genreList = [] }: NavbarBottomProps) {
   const [open, setOpen] = useState(false);
-  const isUpMD = useMediaQuery((theme) => theme.breakpoints.up("md"));
-  const rootValue = !!useMatch(ROUTES_PATHS.ROOT);
-  const catalogValue = !!useMatch(ROUTES_PATHS.CATALOG);
-  const cartValue = !!useMatch(ROUTES_PATHS.CART);
+  const pathname = usePathname();
 
   const handleClose = () => setOpen(false);
 
-  if (isUpMD) {
-    return null;
-  }
-
   return (
-    <BottomNavigation
-      sx={{
-        position: "fixed",
-        left: 0,
-        right: 0,
-        bottom: 0,
-        zIndex: open ? 1350 : 1000,
-        boxShadow: "0 4px 20px rgba(0, 0, 0, .08)",
-      }}
-      showLabels
-      value={true}
-    >
-      <S.NavButton
-        label="Главная"
-        value={rootValue && !open}
-        icon={<HomeOutlinedIcon />}
-        component={Link}
-        to={generatePath(ROUTES_PATHS.ROOT)}
-        onClick={handleClose}
-      />
-      <S.NavButton
-        label="Каталог"
-        value={catalogValue || open}
-        icon={<ManageSearchRoundedIcon />}
-        onClick={() => setOpen(!open)}
-      />
-      <S.NavButton
-        label="Карзина"
-        value={cartValue && !open}
-        icon={<ShoppingBasketOutlinedIcon />}
-        component={Link}
-        to={generatePath(ROUTES_PATHS.CART)}
-        onClick={handleClose}
-      />
-      <BurgerMenuMobile
-        open={open}
-        onClose={handleClose}
-      />
-    </BottomNavigation>
+    <MediaQuery maxWidth="md">
+      <BottomNavigation
+        sx={{
+          position: "fixed",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: open ? 1350 : 1000,
+          boxShadow: "0 4px 20px rgba(0, 0, 0, .08)",
+        }}
+        showLabels
+        value={true}
+      >
+        <S.NavButton
+          label="Главная"
+          value={pathname === "/"}
+          icon={<HomeOutlinedIcon />}
+          component={Link}
+          href="/"
+          onClick={handleClose}
+        />
+        <S.NavButton
+          label="Каталог"
+          value={open}
+          icon={<ManageSearchRoundedIcon />}
+          onClick={() => setOpen(!open)}
+        />
+        <S.NavButton
+          label="Карзина"
+          value={pathname === "/cart" && !open}
+          icon={<ShoppingBasketOutlinedIcon />}
+          component={Link}
+          href="/cart"
+          onClick={handleClose}
+        />
+        <BurgerMenuMobile
+          genreList={genreList}
+          open={open}
+          onClose={handleClose}
+        />
+      </BottomNavigation>
+    </MediaQuery>
   );
 }

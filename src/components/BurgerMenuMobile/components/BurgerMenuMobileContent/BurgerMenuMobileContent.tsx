@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { GenreType } from "@/types";
 import Stack from "@mui/material/Stack";

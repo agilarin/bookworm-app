@@ -1,17 +1,21 @@
+"use client";
+
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import Stack from "@mui/material/Stack";
+import { GenreType } from "@/types/book";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { BurgerMenuItem } from "@/components/UI/BurgerMenuItem";
-import { useGetGenresListQuery } from "@/redux/services/genresApi.ts";
-import * as S from "./BurgerMenu.styles.ts";
-import { GenreType } from "@/types/book.ts";
+import * as S from "./BurgerMenu.styles";
 
-export function BurgerMenu() {
+interface BurgerMenuProps {
+  genresList: GenreType[];
+}
+
+export function BurgerMenu({ genresList }: BurgerMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
   const [focusGenre, setFocusGenre] = useState<GenreType | null>(null);
   const [height, setHeight] = useState<number>();
-  const { data: genresList } = useGetGenresListQuery();
 
   const ref = (node: HTMLDivElement | null) => {
     const rect = node?.getBoundingClientRect();
@@ -53,7 +57,7 @@ export function BurgerMenu() {
             width={256}
             padding={1}
           >
-            {genresList?.map((item) => (
+            {genresList.map((item) => (
               <BurgerMenuItem
                 key={item.id}
                 item={item}

@@ -1,48 +1,30 @@
-import { Stack, Modal, CircularProgress } from "@mui/material";
+"use client";
+
+import Stack from "@mui/material/Stack";
+import Modal from "@mui/material/Modal";
+import { GenreType } from "@/types";
 import { BurgerMenuMobileContent } from "./components/BurgerMenuMobileContent";
-import { useGetGenresListQuery } from "@/redux/services/genresApi";
 
 interface BurgerMenuMobileProps {
+  genreList: GenreType[];
   open: boolean;
   onClose: () => void;
 }
 
-export function BurgerMenuMobile({ open, onClose }: BurgerMenuMobileProps) {
-  const { data: genresList, isLoading } = useGetGenresListQuery();
-
-  if (isLoading) {
-    return (
-      <Modal open={open}>
-        <Stack
-          height="calc(100vh - 56px)"
-          bgcolor={(theme) => theme.palette.background.paper}
-        >
-          <CircularProgress size={52} />
-        </Stack>
-      </Modal>
-    );
-  }
-
-  if (!genresList) {
-    return (
-      <Modal open={open}>
-        <Stack
-          height="calc(100vh - 56px)"
-          bgcolor={(theme) => theme.palette.background.paper}
-        ></Stack>
-      </Modal>
-    );
-  }
-
+export function BurgerMenuMobile({
+  genreList,
+  open,
+  onClose,
+}: BurgerMenuMobileProps) {
   return (
     <Modal open={open}>
       <Stack
         height="calc(100vh - 56px)"
-        bgcolor={(theme) => theme.palette.background.paper}
+        bgcolor="background.paper"
       >
         <BurgerMenuMobileContent
           title="Каталог"
-          genres={genresList}
+          genres={genreList}
           onReturnBack={onClose}
           onClose={onClose}
         />

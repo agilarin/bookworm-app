@@ -19,7 +19,7 @@ export const InputWrapper = styled(Box)<InputWrapperProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.palette.background.paper};
   background-color: ${({ theme, open }) => !open && theme.palette.grey[200]};
-  border-radius: ${({ theme }) => theme.shape.borderRadius * 2}px;
+  border-radius: ${({ theme }) => theme.shape.borderRadius as number * 2}px;
 `;
 
 export const SearchInput = styled(InputBase)<InputBaseProps>`

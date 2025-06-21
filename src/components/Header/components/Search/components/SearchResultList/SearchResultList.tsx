@@ -1,6 +1,8 @@
-import { useEffect, useRef } from "react";
+"use client";
+
+import { useQuery } from "@tanstack/react-query";
 import { Stack, CircularProgress, Typography } from "@mui/material";
-import { useSearchBooksByNameMutation } from "@/redux/services/bookApi";
+import { searchBooks } from "./searchBooks.action";
 import { SearchSuggestsContainer } from "../SearchSuggestsContainer";
 import { SearchResultItem } from "../SearchResultItem";
 
@@ -13,19 +15,11 @@ export function SearchResultList({
   searchTerm,
   onClose,
 }: SearchResultListProps) {
-  const [searchBooksByName, { data: books, isLoading }] =
-    useSearchBooksByNameMutation();
-  const firstUpdate = useRef(true);
-
-  useEffect(() => {
-    if (firstUpdate.current) {
-      firstUpdate.current = false;
-      return;
-    }
-    if (searchTerm) {
-      searchBooksByName(searchTerm);
-    }
-  }, [searchBooksByName, searchTerm]);
+  const { data: books, isLoading } = useQuery({
+    queryKey: ["search", searchTerm],
+    queryFn: () => searchBooks(searchTerm),
+    enabled: Boolean(searchTerm),
+  });
 
   if (!searchTerm) {
     return null;

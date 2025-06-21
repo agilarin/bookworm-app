@@ -1,8 +1,8 @@
-// import { styled } from "@mui/material/styles";
+"use client";
+
 import {
   styled,
   BottomNavigationAction as BotNavAction,
-  // BottomNavigationActionProps as BotNavActionProps,
   bottomNavigationActionClasses,
   ExtendButtonBase,
   BottomNavigationActionTypeMap,

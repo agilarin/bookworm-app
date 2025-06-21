@@ -1,7 +1,10 @@
-import { generatePath, Link } from "react-router";
-import { Stack, Typography, Box } from "@mui/material";
+"use client";
+
+import Link from "next/link";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import { BookType } from "@/types";
-import { ROUTES_PATHS } from "@/constants";
 import { ImagePicture } from "@/components/ImagePicture";
 
 interface SearchResultItemProps {
@@ -10,10 +13,12 @@ interface SearchResultItemProps {
 }
 
 export function SearchResultItem({ book, onClick }: SearchResultItemProps) {
+  const authors = book.authors.map((item) => item.name).join(" ,");
+
   return (
     <Stack
       component={Link}
-      to={generatePath(ROUTES_PATHS.BOOK, { bookId: book.id })}
+      href={`/book/${book.id}`}
       onClick={onClick}
       direction="row"
       alignItems="center"
@@ -52,7 +57,7 @@ export function SearchResultItem({ book, onClick }: SearchResultItemProps) {
           fontSize={13}
           color="textSecondary"
         >
-          {book.authors.map((item) => item.name).join(" ,")}
+          {authors}
         </Typography>
       </Stack>
     </Stack>

@@ -1,11 +1,13 @@
+"use client"
+
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
 import Backdrop from "@mui/material/Backdrop";
 import Stack from "@mui/material/Stack";
-import { useDebounce } from "@/hooks/useDebounce.ts";
+import { useDebounce } from "@/hooks/useDebounce";
 import { SearchResultList } from "./components/SearchResultList";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import * as S from "./Search.styles.ts";
+import * as S from "./Search.styles";
 
 export function Search() {
   const [open, setOpen] = useState(false);

@@ -1,27 +1,17 @@
-import { Link } from "react-router";
-import { ROUTES_PATHS } from "@/constants";
-import { useAppSelector } from "@/hooks/useAppSelector.ts";
-import { selectCart } from "@/redux/cartSlice.ts";
-import {
-  Container,
-  Stack,
-  Toolbar,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
+import Link from "next/link";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { MediaQuery } from "@/components/MediaQuery";
+import { getGenresList } from "@/lib/firebase/genres";
 import { BurgerMenu } from "./components/BurgerMenu";
 import { Search } from "./components/Search";
-// import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
-import ShoppingBasketOutlinedIcon from "@mui/icons-material/ShoppingBasketOutlined";
-import * as S from "./Header.styles.ts";
+import { CartButton } from "./components/CartButton";
+import * as S from "./Header.styles";
 
-export function Header() {
-  const isUpMD = useMediaQuery((theme) => theme.breakpoints.up("md"));
-  const cart = useAppSelector(selectCart);
-
-  const cartTotal = cart.items.reduce((total, item) => {
-    return total + item.quantity;
-  }, 0);
+export async function Header() {
+  const genresList = await getGenresList();
 
   return (
     <S.Root position="sticky">
@@ -34,14 +24,14 @@ export function Header() {
             alignItems="center"
             gap={{ xs: 2, md: 4 }}
           >
-            {isUpMD && (
+            <MediaQuery minWidth="md">
               <Stack
                 flex={1}
                 direction="row"
                 alignItems="center"
                 spacing={{ xs: 1, md: 3 }}
               >
-                <Link to={ROUTES_PATHS.ROOT}>
+                <Link href="/">
                   <Typography
                     color="primary"
                     variant="h6"
@@ -50,34 +40,22 @@ export function Header() {
                     BookWorm
                   </Typography>
                 </Link>
-                <BurgerMenu />
+                <BurgerMenu genresList={genresList || []} />
               </Stack>
-            )}
+            </MediaQuery>
 
             <Search />
 
-            {isUpMD && (
+            <MediaQuery minWidth="md">
               <Stack
                 flex={1}
                 direction="row"
                 justifyContent="flex-end"
                 spacing={{ xs: 1, md: 2 }}
               >
-                <S.Button
-                  size="medium"
-                  component={Link}
-                  to={ROUTES_PATHS.CART}
-                >
-                  <S.Badge
-                    badgeContent={cartTotal}
-                    color="primary"
-                    sx={{}}
-                  >
-                    <ShoppingBasketOutlinedIcon />
-                  </S.Badge>
-                </S.Button>
+                <CartButton />
               </Stack>
-            )}
+            </MediaQuery>
           </Stack>
         </Toolbar>
       </Container>

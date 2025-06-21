@@ -1,1 +1,1 @@
-export {BurgerMenu} from "./BurgerMenu.tsx";
+export {BurgerMenu} from "./BurgerMenu";

@@ -1,3 +1,5 @@
+"use client"
+
 import { createTheme } from "@mui/material/styles";
 import { reset } from "./reset";
 import { grey } from "@mui/material/colors";

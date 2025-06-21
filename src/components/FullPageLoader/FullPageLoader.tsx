@@ -7,7 +7,7 @@ export function FullPageLoader() {
       display="flex"
       alignItems="center"
       justifyContent="center"
-      bgcolor={(theme) => theme.palette.background.paper}
+      bgcolor="background.paper"
     >
       <CircularProgress size={52} />
     </Box>

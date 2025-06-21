@@ -1,9 +1,10 @@
-import { generatePath, Link } from "react-router";
+"use client";
+
+import Link from "next/link";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { GenreType } from "@/types/book.ts";
-import { ROUTES_PATHS } from "@/constants";
+import { GenreType } from "@/types/book";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 interface BurgerMenuItemProps {
@@ -26,7 +27,7 @@ export function BurgerMenuItem({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       component={isLink ? Link : "li"}
-      to={generatePath(ROUTES_PATHS.CATALOG, { genreSlug: item.id })}
+      href={`/catalog/${item.id}`}
       sx={{
         borderRadius: 1,
         py: 1,
@@ -55,7 +56,7 @@ export function BurgerMenuItem({
         {item?.genres?.length && (
           <ArrowForwardIosRoundedIcon
             fontSize="small"
-            color={"disabled"}
+            color="disabled"
           />
         )}
       </Stack>
