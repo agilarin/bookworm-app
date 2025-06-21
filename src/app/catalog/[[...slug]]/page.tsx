@@ -1,20 +1,19 @@
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
 import { BooksSortFieldValues, GenerateMetadataProps } from "@/types";
 import { MediaQuery } from "@/components/MediaQuery";
 import { getBooks } from "@/lib/firebase/books";
+import { getGenreById, getGenresList } from "@/lib/firebase/genres";
 import { Filter } from "./_components/Filter";
 import { ItemList } from "./_components/ItemList";
 import { CatalogHeader } from "./_components/CatalogHeader";
-import { Pagination } from "./_components/Pagination";
-import { getGenreById, getGenresList } from "@/lib/firebase/genres";
+import { CatalogFooter } from "./_components/CatalogFooter";
 
 type CatalogParams = Promise<{ slug?: string[] }>;
 type CatalogSearchParams = Promise<{
   sort?: BooksSortFieldValues;
-  page?: number;
+  page?: string;
 }>;
 
 export async function generateMetadata({
@@ -25,9 +24,6 @@ export async function generateMetadata({
   if (!slug) {
     return { title: "Книги - BookWorm" };
   }
-
-  console.log(slug);
-
   const genre = await getGenreById(slug[0]);
 
   if (genre) {
@@ -55,8 +51,8 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
       genre?.genresId ||
       (genre?.id && genre.id !== "all" && [genre?.id]) ||
       undefined,
-    page: page || undefined,
-    sort: sort || undefined,
+    page: page,
+    sort: sort,
   });
 
   return (
@@ -85,18 +81,10 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
               slug={slug?.[0]}
             />
             <ItemList books={books} />
-            <Stack
-              direction="row"
-              justifyContent="center"
-              paddingTop={1}
-              paddingX={2}
-              paddingBottom={2}
-            >
-              <Pagination
-                page={page}
-                count={pages}
-              />
-            </Stack>
+            <CatalogFooter
+              page={page}
+              count={pages}
+            />
           </Paper>
         </Grid>
       </Grid>

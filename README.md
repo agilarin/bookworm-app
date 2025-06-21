@@ -20,7 +20,7 @@ BookWorm - это веб приложение интернет-магазина 
 - Next.js
 - Redux-toolkit
 - Material UI
-- Firebase
+- Firebase-admin
 
 ## Скриншоты
 

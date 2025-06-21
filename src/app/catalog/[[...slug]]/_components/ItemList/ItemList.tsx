@@ -1,5 +1,5 @@
 import { Grid } from "@mui/material";
-import { BasicCard } from "@/components/BasicCard";
+import { BasicCard } from "@/components/UI/BasicCard";
 import { BookType } from "@/types";
 
 interface ItemListProps {

@@ -3,7 +3,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
 import { getBooks } from "@/lib/firebase/books";
-import { BasicCard } from "@/components/BasicCard";
+import { BasicCard } from "@/components/UI/BasicCard";
 
 export default async function Home() {
   const { books } = await getBooks({});

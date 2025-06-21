@@ -7,7 +7,7 @@ import { BOOK_SORT_QUERY_MAP, LIMIT, SEARCH_LIMIT } from "@/constants";
 interface GetBooksType {
   genresId?: string[];
   sort?: BooksSortFieldValues;
-  page?: number;
+  page?: number | string;
   limit?: number;
 }
 type GetBooksResponse = {
@@ -31,7 +31,7 @@ function extractBooksFromQuerySnap(querySnap: QuerySnapshot) {
 export const getBooks = unstable_cache(
   async (data: GetBooksType): Promise<GetBooksResponse> => {
     const limit = data?.limit || LIMIT;
-    const page = data?.page || 1;
+    const page = Number(data?.page) || 1;
     const sort = data?.sort || "popularDesc";
     const genresId = data?.genresId;
 
