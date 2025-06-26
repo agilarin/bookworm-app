@@ -10,11 +10,13 @@ import { Filter } from "./_components/Filter";
 import { ItemList } from "./_components/ItemList";
 import { CatalogHeader } from "./_components/CatalogHeader";
 import { CatalogFooter } from "./_components/CatalogFooter";
+import { getBooksTags } from "@/lib/firebase/tags";
 
 type CatalogParams = Promise<{ slug?: string[] }>;
 type CatalogSearchParams = Promise<{
   sort?: BooksSortFieldValues;
   page?: string;
+  tags?: string;
 }>;
 
 export async function generateMetadata({
@@ -41,22 +43,23 @@ interface CatalogProps {
 
 export default async function Catalog({ params, searchParams }: CatalogProps) {
   const { slug } = await params;
-  const { sort, page } = await searchParams;
-  let genre;
-  if (slug) {
-    genre = await getGenreById(slug[0]);
-  }
+  const { sort, page, tags: tagsId } = await searchParams;
+
+  const genre = slug && (await getGenreById(slug[0]));
   if (slug && !genre) {
     notFound();
   }
+
+  const genresId = genre?.genresId || genre?.id;
   const genresList = await getGenresList();
   const { pages, books } = await getBooks({
-    genresId:
-      genre?.genresId ||
-      (genre?.id && genre.id !== "all" && [genre?.id]) ||
-      undefined,
+    genresId,
+    tagsId,
     page: page,
     sort: sort,
+  });
+  const tags = await getBooksTags({
+    genresId,
   });
 
   return (
@@ -71,6 +74,7 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
         <MediaQuery minWidth="md">
           <Grid width="256px">
             <Filter
+              tags={tags}
               genresList={genresList || []}
               slug={slug?.[0]}
             />

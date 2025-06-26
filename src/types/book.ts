@@ -10,6 +10,11 @@ export type SuperGenreType = {
   genres: GenreType[];
 };
 
+export type TagType = {
+  name: string;
+  id: string;
+};
+
 export type AuthorType = {
   name: string;
   id: string;
@@ -35,10 +40,10 @@ export type BookType = {
   dateCreate?: number;
   images: BookImageType[];
   genres: GenreType[];
-  tags: GenreType[];
+  tags: TagType[];
   authors: AuthorType[];
-  genresId: GenreType[];
-  tagsId: GenreType[];
+  genresId: string[];
+  tagsId: string[];
   authorsId: AuthorType[];
 };
 

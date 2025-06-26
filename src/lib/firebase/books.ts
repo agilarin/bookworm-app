@@ -1,11 +1,13 @@
 import { firestoreAdmin } from "./firebaseAdmin";
 import { unstable_cache } from "next/cache";
-import { FieldPath, QuerySnapshot } from "firebase-admin/firestore";
+import { FieldPath } from "firebase-admin/firestore";
 import { BookType, BooksSortFieldValues } from "@/types";
 import { BOOK_SORT_QUERY_MAP, LIMIT, SEARCH_LIMIT } from "@/constants";
+import { extractBooksFromQuerySnapshot } from "@/utils/extractBooksFromQuerySnapshot";
 
 interface GetBooksType {
-  genresId?: string[];
+  genresId?: string | string[];
+  tagsId?: string | string[];
   sort?: BooksSortFieldValues;
   page?: number | string;
   limit?: number;
@@ -18,32 +20,26 @@ type GetBooksResponse = {
 
 const booksRef = firestoreAdmin.collection("books");
 
-function extractBooksFromQuerySnap(querySnap: QuerySnapshot) {
-  return querySnap.docs.map(
-    (snap) =>
-      ({
-        id: snap.id,
-        ...snap.data(),
-      } as BookType)
-  );
-}
-
 export const getBooks = unstable_cache(
   async (data: GetBooksType): Promise<GetBooksResponse> => {
     const limit = data?.limit || LIMIT;
     const page = Number(data?.page) || 1;
     const sort = data?.sort || "popularDesc";
-    const genresId = data?.genresId;
+    const genresId = data?.genresId && Array<string>(0).concat(data?.genresId);
+    const tagsId = data?.tagsId && Array<string>(0).concat(data?.tagsId);
 
     try {
       let booksQuery = booksRef.orderBy(...BOOK_SORT_QUERY_MAP[sort]);
-      if (genresId) {
+      if (genresId && genresId.length) {
         booksQuery = booksQuery.where(
           "genresId",
           "array-contains-any",
           genresId
         );
       }
+      // if (tagsId && tagsId.length) {
+      //   booksQuery = booksQuery.where("tagsId", "array-contains-any", tagsId);
+      // }
 
       const booksCountSnap = await booksQuery.count().get();
       const count = booksCountSnap.data().count;
@@ -55,7 +51,7 @@ export const getBooks = unstable_cache(
       return {
         count: count,
         pages: Math.floor(count / limit),
-        books: extractBooksFromQuerySnap(booksSnap),
+        books: extractBooksFromQuerySnapshot(booksSnap),
       };
     } catch (error) {
       console.log(error);
@@ -101,7 +97,7 @@ export const getBooksById = unstable_cache(
         .where(FieldPath.documentId(), "in", idArray)
         .get();
 
-      return extractBooksFromQuerySnap(booksSnap);
+      return extractBooksFromQuerySnapshot(booksSnap);
     } catch (error) {
       console.log(error);
       throw error;
@@ -124,7 +120,7 @@ export async function searchBooksByName(searchTerm: string) {
       .limit(SEARCH_LIMIT)
       .get();
 
-    return extractBooksFromQuerySnap(booksSnap);
+    return extractBooksFromQuerySnapshot(booksSnap);
   } catch (error) {
     console.log(error);
     throw error;
