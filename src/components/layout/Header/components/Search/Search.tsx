@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState } from "react";
 import SearchIcon from "@mui/icons-material/Search";
@@ -53,8 +53,8 @@ export function Search() {
                 />
               </S.SearchButton>
             )}
-            <S.SearchButton color="primary">
-              <SearchIcon />
+            <S.SearchButton color="inherit">
+              <SearchIcon sx={{ color: "grey.700" }} />
             </S.SearchButton>
           </Stack>
         </S.InputWrapper>
