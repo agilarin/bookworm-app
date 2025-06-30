@@ -31,7 +31,7 @@ export default async function Home() {
     <Container>
       <Stack
         paddingY={2}
-        gap={2.5}
+        gap={{ xs: 1, md: 2.5 }}
       >
         <Paper elevation={0}>
           <BookPreviewSliderSection items={booksPreview} />
