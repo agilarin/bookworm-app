@@ -38,7 +38,7 @@ export function AboutBook({ book }: AboutBookProps) {
             label={name}
             clickable
             component={Link}
-            href={`catalog/${id}`}
+            href={`/catalog/${id}`}
             sx={{ borderRadius: 1, height: "26px", span: { px: 1.25 } }}
           />
         ))}

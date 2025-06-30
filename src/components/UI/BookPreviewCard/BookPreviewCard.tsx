@@ -8,6 +8,7 @@ import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { useMediaQuery } from "@mui/material";
+import Link from "next/link";
 
 interface BookPreviewCardProps {
   book: BookType;
@@ -104,8 +105,10 @@ export function BookPreviewCard({ book }: BookPreviewCardProps) {
             marginTop={3}
           >
             <Button
+              component={Link}
               variant="contained"
               disableElevation
+              href={`/book/${book.id}`}
             >
               Подробнее
             </Button>
