@@ -3,13 +3,19 @@ import Paper from "@mui/material/Paper";
 import { Category, CategoryProps } from "../Category";
 import { FilterItem } from "../FilterItem";
 import { FilterSelect, FilterSelectItem } from "../FilterSelect";
-import { TagType } from "@/types";
+import { PublisherType } from "@/types";
 
 interface FilterProps extends CategoryProps {
-  tags: TagType[];
+  ageRatings: string[];
+  publishers: PublisherType[];
 }
 
-export function Filter({ genresList, slug, tags }: FilterProps) {
+export function Filter({
+  genresList,
+  slug,
+  ageRatings,
+  publishers,
+}: FilterProps) {
   return (
     <Paper elevation={0}>
       <Stack
@@ -23,14 +29,27 @@ export function Filter({ genresList, slug, tags }: FilterProps) {
           />
         </FilterItem>
 
-        <FilterItem title="Тэги">
+        <FilterItem title="Издательства">
           <FilterSelect
-            items={tags.map(({ id, name }) => (
+            items={publishers.map(({ id, name }) => (
               <FilterSelectItem
                 key={id}
                 title={name}
-                searchParamsName="tags"
+                searchParamsName="publishers"
                 searchParamsValue={id}
+              />
+            ))}
+          />
+        </FilterItem>
+
+        <FilterItem title="Возрастное ограничение">
+          <FilterSelect
+            items={ageRatings.map((item) => (
+              <FilterSelectItem
+                key={item}
+                title={item}
+                searchParamsName="ageRatings"
+                searchParamsValue={item}
               />
             ))}
           />

@@ -15,7 +15,7 @@ export function AboutBook({ book }: AboutBookProps) {
     { name: "Возрастные ограничения:", value: book?.ageRating },
     { name: "Количество страниц:", value: book?.pages },
     { name: "ISBN:", value: book?.isbn },
-    { name: "Правообладатель:", value: book?.CopyrightHolder },
+    { name: "Правообладатель:", value: book?.publisher?.name },
   ];
 
   return (

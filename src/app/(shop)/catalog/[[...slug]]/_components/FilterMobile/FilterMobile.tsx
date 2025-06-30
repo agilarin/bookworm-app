@@ -6,14 +6,24 @@ import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
+import { PublisherType } from "@/types";
 import { Category, CategoryProps } from "../Category";
 import { FilterItem } from "../FilterItem";
+import { FilterSelect, FilterSelectItem } from "../FilterSelect";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 
-export type FilterMobileProps = CategoryProps;
+export interface FilterMobileProps extends CategoryProps {
+  ageRatings: string[];
+  publishers: PublisherType[];
+}
 
-export function FilterMobile({ genresList, slug }: FilterMobileProps) {
+export function FilterMobile({
+  genresList,
+  slug,
+  ageRatings,
+  publishers,
+}: FilterMobileProps) {
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -71,11 +81,38 @@ export function FilterMobile({ genresList, slug }: FilterMobileProps) {
         <Stack
           overflow="auto"
           padding={1.5}
+          gap={1.5}
         >
-          <FilterItem title={"Жанры"}>
+          <FilterItem title="Жанры">
             <Category
               genresList={genresList}
               slug={slug}
+            />
+          </FilterItem>
+
+          <FilterItem title="Издательства">
+            <FilterSelect
+              items={publishers.map(({ id, name }) => (
+                <FilterSelectItem
+                  key={id}
+                  title={name}
+                  searchParamsName="publishers"
+                  searchParamsValue={id}
+                />
+              ))}
+            />
+          </FilterItem>
+
+          <FilterItem title="Возрастное ограничение">
+            <FilterSelect
+              items={ageRatings.map((item) => (
+                <FilterSelectItem
+                  key={item}
+                  title={item}
+                  searchParamsName="ageRatings"
+                  searchParamsValue={item}
+                />
+              ))}
             />
           </FilterItem>
         </Stack>

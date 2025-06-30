@@ -15,6 +15,11 @@ export type TagType = {
   id: string;
 };
 
+export type PublisherType = {
+  name: string;
+  id: string;
+};
+
 export type AuthorType = {
   name: string;
   id: string;
@@ -35,7 +40,7 @@ export type BookType = {
   ageRating: string;
   isbn?: string;
   translator?: string;
-  CopyrightHolder?: string;
+  publisher?: PublisherType;
   dateTranslate?: number;
   dateCreate?: number;
   images: BookImageType[];
@@ -45,6 +50,11 @@ export type BookType = {
   genresId: string[];
   tagsId: string[];
   authorsId: AuthorType[];
+};
+
+export type BookFilterType = {
+  ageRatings: string[];
+  publishers: PublisherType[];
 };
 
 export type BooksSortFieldValues =

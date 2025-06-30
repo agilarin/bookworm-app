@@ -31,18 +31,21 @@ export function FilterSelect({ items }: FilterSelectProps) {
       >
         {open ? items : items?.slice(0, 8)}
       </Stack>
-      <Link
-        component="button"
-        underline="none"
-        fontSize="14px"
-        sx={{
-          mt: 0.5,
-          marginLeft: 0.75,
-        }}
-        onClick={handleClick}
-      >
-        {open ? "Свернуть" : "Посмотреть все"}
-      </Link>
+
+      {!!items?.length && items?.length > 8 && (
+        <Link
+          component="button"
+          underline="none"
+          fontSize="14px"
+          sx={{
+            mt: 0.5,
+            marginLeft: 0.75,
+          }}
+          onClick={handleClick}
+        >
+          {open ? "Свернуть" : "Посмотреть все"}
+        </Link>
+      )}
     </Stack>
   );
 }

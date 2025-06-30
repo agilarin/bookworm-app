@@ -3,20 +3,20 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import { BooksSortFieldValues, GenerateMetadataProps } from "@/types";
-import { getBooks } from "@/lib/firebase/books";
+import { getBooks, getBooksFilter } from "@/lib/firebase/books";
 import { getGenreById, getGenresList } from "@/lib/firebase/genres";
 import { MediaQuery } from "@/components/MediaQuery";
 import { Filter } from "./_components/Filter";
 import { ItemList } from "./_components/ItemList";
 import { CatalogHeader } from "./_components/CatalogHeader";
 import { CatalogFooter } from "./_components/CatalogFooter";
-import { getBooksTags } from "@/lib/firebase/tags";
 
 type CatalogParams = Promise<{ slug?: string[] }>;
 type CatalogSearchParams = Promise<{
   sort?: BooksSortFieldValues;
   page?: string;
-  tags?: string;
+  ageRatings?: string | string[];
+  publishers?: string | string[];
 }>;
 
 export async function generateMetadata({
@@ -43,24 +43,38 @@ interface CatalogProps {
 
 export default async function Catalog({ params, searchParams }: CatalogProps) {
   const { slug } = await params;
-  const { sort, page, tags: tagsId } = await searchParams;
+  const { sort, page, ageRatings, publishers } = await searchParams;
 
   const genre = slug && (await getGenreById(slug[0]));
   if (slug && !genre) {
     notFound();
   }
 
-  const genresId = genre?.genresId || genre?.id;
-  const genresList = await getGenresList();
-  const { pages, books } = await getBooks({
-    genresId,
-    tagsId,
-    page: page,
-    sort: sort,
-  });
-  const tags = await getBooksTags({
-    genresId,
-  });
+  const commonArg = {
+    genresId: genre?.genresId || genre?.id,
+    publishersId: publishers,
+    ageRatings,
+  };
+
+  const [genresList, { pages, books }, ageRatingsFilter, publishersFilter] =
+    await Promise.all([
+      await getGenresList(),
+      await getBooks({
+        ...commonArg,
+        page: page,
+        sort: sort,
+      }),
+      await getBooksFilter({
+        name: "ageRating",
+        ...commonArg,
+      }),
+      await getBooksFilter({
+        name: "publisher",
+        ...commonArg,
+      }),
+    ]);
+
+  console.log(ageRatingsFilter, publishersFilter);
 
   return (
     <Container>
@@ -74,7 +88,8 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
         <MediaQuery minWidth="md">
           <Grid width="256px">
             <Filter
-              tags={tags}
+              publishers={publishersFilter}
+              ageRatings={ageRatingsFilter}
               genresList={genresList || []}
               slug={slug?.[0]}
             />
@@ -85,14 +100,19 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
           <Paper elevation={0}>
             <CatalogHeader
               title={genre?.name || "Каталог"}
+              publishers={publishersFilter}
+              ageRatings={ageRatingsFilter}
               genresList={genresList || []}
               slug={slug?.[0]}
             />
             <ItemList books={books} />
-            <CatalogFooter
-              page={page}
-              count={pages}
-            />
+
+            {Number(pages) > 1 && (
+              <CatalogFooter
+                page={page}
+                count={pages}
+              />
+            )}
           </Paper>
         </Grid>
       </Grid>

@@ -8,7 +8,13 @@ interface CatalogHeaderProps extends FilterMobileProps {
   title: string;
 }
 
-export function CatalogHeader({ title, genresList, slug }: CatalogHeaderProps) {
+export function CatalogHeader({
+  title,
+  genresList,
+  slug,
+  ageRatings,
+  publishers,
+}: CatalogHeaderProps) {
   return (
     <Stack
       direction={{ md: "row" }}
@@ -37,6 +43,8 @@ export function CatalogHeader({ title, genresList, slug }: CatalogHeaderProps) {
         <SortMenu />
         <MediaQuery maxWidth="md">
           <FilterMobile
+            publishers={publishers}
+            ageRatings={ageRatings}
             genresList={genresList}
             slug={slug}
           />
