@@ -16,7 +16,7 @@ export function BasicCard({ book }: BasicCardProps) {
   return (
     <Card
       elevation={0}
-      sx={{ maxWidth: 180, width: 1 }}
+      sx={{ maxWidth: 180, width: "100%" }}
     >
       <Link href={`/book/${book.id}`}>
         <ImagePicture
