@@ -31,6 +31,7 @@ export function FilterSelectItem({
     } else {
       params.delete(searchParamsName, searchParamsValue);
     }
+    params.delete("page");
     router.push(`${pathname}?${params.toString()}`);
     window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
   };
