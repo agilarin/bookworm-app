@@ -58,23 +58,21 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
 
   const [genresList, { pages, books }, ageRatingsFilter, publishersFilter] =
     await Promise.all([
-      await getGenresList(),
-      await getBooks({
+      getGenresList(),
+      getBooks({
         ...commonArg,
         page: page,
         sort: sort,
       }),
-      await getBooksFilter({
+      getBooksFilter({
         name: "ageRating",
         ...commonArg,
       }),
-      await getBooksFilter({
+      getBooksFilter({
         name: "publisher",
         ...commonArg,
       }),
     ]);
-
-  console.log(ageRatingsFilter, publishersFilter);
 
   return (
     <Container>
