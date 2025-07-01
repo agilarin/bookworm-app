@@ -146,11 +146,14 @@ interface GetBooksFilterType<N> {
   ageRatings?: string | string[];
   publishersId?: string | string[];
 }
+type GetBooksFilterReturnType<N> = N extends "ageRating"
+  ? string
+  : PublisherType;
 
 export const getBooksFilter = unstable_cache(
   async <N extends BookFilterNames>(
     data: GetBooksFilterType<N>
-  ): Promise<N extends "ageRating" ? string[] : PublisherType[]> => {
+  ): Promise<GetBooksFilterReturnType<N>[]> => {
     const name = data.name;
     const genresId = data?.genresId && Array<string>(0).concat(data?.genresId);
     const ageRatings =
@@ -176,7 +179,9 @@ export const getBooksFilter = unstable_cache(
 
       const filterSnap = await filtersQuery.select(name).get();
 
-      const filterMap: { [k: string]: unknown } = {};
+      const filterMap: {
+        [k: string]: GetBooksFilterReturnType<N>;
+      } = {};
 
       filterSnap.docs.forEach((snap) => {
         const data = snap.data();
@@ -186,7 +191,7 @@ export const getBooksFilter = unstable_cache(
         }
       });
 
-      return Object.values(filterMap) as any;
+      return Object.values(filterMap);
     } catch (error) {
       console.log(error);
       throw error;
