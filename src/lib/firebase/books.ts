@@ -5,15 +5,9 @@ import {
   FieldPath,
   Query,
 } from "firebase-admin/firestore";
-import {
-  BookFilterType,
-  BookType,
-  BooksSortFieldValues,
-  PublisherType,
-} from "@/types";
+import { BookType, BooksSortFieldValues, PublisherType } from "@/types";
 import { BOOK_SORT_QUERY_MAP, LIMIT, SEARCH_LIMIT } from "@/constants";
 import { extractBooksFromQuerySnapshot } from "@/utils/extractBooksFromQuerySnapshot";
-import slugify from "@sindresorhus/slugify";
 
 interface GetBooksType {
   genresId?: string | string[];
@@ -152,7 +146,7 @@ interface GetBooksFilterType<N> {
   ageRatings?: string | string[];
   publishersId?: string | string[];
 }
-// : N extends "ageRating" ? string : PublisherType[]
+
 export const getBooksFilter = unstable_cache(
   async <N extends BookFilterNames>(
     data: GetBooksFilterType<N>

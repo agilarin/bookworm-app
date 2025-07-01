@@ -52,11 +52,6 @@ export type BookType = {
   authorsId: AuthorType[];
 };
 
-export type BookFilterType = {
-  ageRatings: string[];
-  publishers: PublisherType[];
-};
-
 export type BooksSortFieldValues =
   | "popularDesc"
   | "ratingDesc"
