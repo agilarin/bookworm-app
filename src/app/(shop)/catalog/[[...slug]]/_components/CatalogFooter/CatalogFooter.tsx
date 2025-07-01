@@ -18,7 +18,7 @@ export function CatalogFooter({ count, page = 1 }: CatalogFooterProps) {
     const params = new URLSearchParams(searchParams);
     params.set("page", newPage.toString());
     router.push(`${pathname}?${params.toString()}`);
-    window.scrollTo(0, 0);
+    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
   };
 
   return (

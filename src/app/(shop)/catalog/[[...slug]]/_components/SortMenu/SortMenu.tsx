@@ -29,6 +29,7 @@ export function SortMenu() {
     const value = event.target.value as string;
     setSortValue(value);
     router.push(pathname + "?" + createQueryString("sort", value));
+    window.scrollTo({ left: 0, top: 0, behavior: "smooth" });
   };
 
   return (
