@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { GenreType } from "@/types";
 import Stack from "@mui/material/Stack";
+
+import { GenreMenuType, GenreType } from "@/types";
 import { BurgerMenuMobileHeader } from "../BurgerMenuMobileHeader";
 import { BurgerMenuItem } from "@/components/UI/BurgerMenuItem";
 
@@ -10,20 +11,20 @@ interface BurgerMenuMobileContentProps {
   onReturnBack: () => void;
   onClose: () => void;
   title: string;
-  genres: GenreType[];
+  items: GenreMenuType[] | GenreType[];
 }
 
 export function BurgerMenuMobileContent({
   onReturnBack,
   onClose,
-  genres,
+  items,
   title,
 }: BurgerMenuMobileContentProps) {
-  const [activeGenre, setActiveGenre] = useState<GenreType | null>(null);
+  const [activeItem, setActiveItem] = useState<GenreMenuType | null>(null);
 
-  const setAsd = (genre: GenreType) => {
-    if (genre.genres) {
-      setActiveGenre(genre);
+  const handleClick = (item: GenreMenuType | GenreType) => {
+    if ("genres" in item) {
+      setActiveItem(item);
     } else {
       onClose();
     }
@@ -31,7 +32,7 @@ export function BurgerMenuMobileContent({
 
   return (
     <>
-      {!activeGenre?.genres && (
+      {!activeItem?.genres && (
         <Stack height={1}>
           <BurgerMenuMobileHeader
             title={title}
@@ -42,23 +43,23 @@ export function BurgerMenuMobileContent({
             overflow="auto"
             py={0.5}
           >
-            {genres?.map((item) => (
+            {items?.map((item) => (
               <BurgerMenuItem
-                onClick={() => setAsd(item)}
+                onClick={() => handleClick(item)}
                 key={item.id}
                 item={item}
-                isLink={!item.genres}
+                isLink={!("genres" in item)}
               />
             ))}
           </Stack>
         </Stack>
       )}
 
-      {activeGenre?.genres && (
+      {activeItem?.genres && (
         <BurgerMenuMobileContent
-          title={activeGenre.name}
-          genres={activeGenre.genres}
-          onReturnBack={() => setActiveGenre(null)}
+          title={activeItem.name}
+          items={activeItem.genres}
+          onReturnBack={() => setActiveItem(null)}
           onClose={onClose}
         />
       )}

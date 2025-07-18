@@ -4,11 +4,12 @@ import Link from "next/link";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { GenreType } from "@/types/bookTypes";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
+import { GenreMenuType, GenreType } from "@/types/bookTypes";
+
 interface BurgerMenuItemProps {
-  item: GenreType;
+  item: GenreType | GenreMenuType;
   onClick?: () => void;
   onMouseEnter?: () => void;
   selected?: boolean;
@@ -53,7 +54,7 @@ export function BurgerMenuItem({
         >
           {item.name}
         </Typography>
-        {item?.genres?.length && (
+        {"genres" in item && item?.genres?.length && (
           <ArrowForwardIosRoundedIcon
             fontSize="small"
             color="disabled"

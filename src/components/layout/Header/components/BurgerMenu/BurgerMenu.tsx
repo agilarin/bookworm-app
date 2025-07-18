@@ -3,18 +3,18 @@
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import Stack from "@mui/material/Stack";
-import { GenreType } from "@/types/bookTypes";
+import { GenreMenuType } from "@/types/bookTypes";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { BurgerMenuItem } from "@/components/UI/BurgerMenuItem";
 import * as S from "./BurgerMenu.styles";
 
 interface BurgerMenuProps {
-  genresList: GenreType[];
+  genreMenus: GenreMenuType[];
 }
 
-export function BurgerMenu({ genresList }: BurgerMenuProps) {
+export function BurgerMenu({ genreMenus }: BurgerMenuProps) {
   const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-  const [focusGenre, setFocusGenre] = useState<GenreType | null>(null);
+  const [focusItem, setFocusItem] = useState<GenreMenuType | null>(null);
   const [height, setHeight] = useState<number>();
 
   const ref = (node: HTMLDivElement | null) => {
@@ -28,7 +28,7 @@ export function BurgerMenu({ genresList }: BurgerMenuProps) {
 
   const handleClose = () => {
     setAnchorEl(null);
-    setFocusGenre(null);
+    setFocusItem(null);
   };
 
   return (
@@ -57,18 +57,18 @@ export function BurgerMenu({ genresList }: BurgerMenuProps) {
             width={256}
             padding={1}
           >
-            {genresList.map((item) => (
+            {genreMenus.map((item) => (
               <BurgerMenuItem
                 key={item.id}
                 item={item}
                 onClick={handleClose}
-                onMouseEnter={() => setFocusGenre(item)}
-                selected={focusGenre?.id === item.id}
+                onMouseEnter={() => setFocusItem(item)}
+                selected={focusItem?.id === item.id}
                 isLink
               />
             ))}
           </Stack>
-          {focusGenre && (
+          {focusItem && (
             <Stack
               flex={1}
               width={256}
@@ -77,7 +77,7 @@ export function BurgerMenu({ genresList }: BurgerMenuProps) {
               borderLeft={(theme) => `2px solid ${theme.palette.divider}`}
               padding={1}
             >
-              {focusGenre.genres?.map((item) => (
+              {focusItem.genres?.map((item) => (
                 <BurgerMenuItem
                   onClick={handleClose}
                   key={item.id}

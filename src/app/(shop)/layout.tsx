@@ -31,7 +31,7 @@ export default async function Layout({
       </Stack>
 
       <Footer />
-      <NavbarBottom genreList={genreMenus || []} />
+      <NavbarBottom genreMenus={genreMenus} />
     </Stack>
   );
 }

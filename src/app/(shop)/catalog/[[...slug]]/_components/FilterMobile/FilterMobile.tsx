@@ -19,7 +19,7 @@ export interface FilterMobileProps extends CategoryProps {
 }
 
 export function FilterMobile({
-  genresList,
+  genreMenus,
   slug,
   ageRatings,
   publishers,
@@ -85,7 +85,7 @@ export function FilterMobile({
         >
           <FilterItem title="Жанры">
             <Category
-              genresList={genresList}
+              genreMenus={genreMenus}
               slug={slug}
             />
           </FilterItem>

@@ -42,7 +42,7 @@ export async function Header() {
                     BookWorm
                   </Typography>
                 </Link>
-                <BurgerMenu genresList={genreMenus || []} />
+                <BurgerMenu genreMenus={genreMenus} />
               </Stack>
             </MediaQuery>
 

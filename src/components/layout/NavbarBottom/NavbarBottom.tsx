@@ -9,7 +9,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
 
-import { GenreType } from "@/types";
+import { GenreMenuType } from "@/types";
 import { useAuth } from "@/hooks/useAuth";
 import { BurgerMenuMobile } from "@/components/BurgerMenuMobile";
 import { MediaQuery } from "@/components/MediaQuery";
@@ -18,10 +18,10 @@ import { useAuthModal } from "@/contexts/AuthModalContext";
 import * as S from "./NavbarBottom.styles";
 
 interface NavbarBottomProps {
-  genreList: GenreType[];
+  genreMenus: GenreMenuType[];
 }
 
-export function NavbarBottom({ genreList = [] }: NavbarBottomProps) {
+export function NavbarBottom({ genreMenus = [] }: NavbarBottomProps) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
   const { signOut, isAuth } = useAuth();
@@ -80,7 +80,7 @@ export function NavbarBottom({ genreList = [] }: NavbarBottomProps) {
           onClick={isAuth ? signOut : onToggle}
         />
         <BurgerMenuMobile
-          genreList={genreList}
+          genreMenus={genreMenus}
           open={open}
           onClose={handleClose}
         />

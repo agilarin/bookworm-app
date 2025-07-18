@@ -2,17 +2,17 @@
 
 import Stack from "@mui/material/Stack";
 import Modal from "@mui/material/Modal";
-import { GenreType } from "@/types";
+import { GenreMenuType } from "@/types";
 import { BurgerMenuMobileContent } from "./components/BurgerMenuMobileContent";
 
 interface BurgerMenuMobileProps {
-  genreList: GenreType[];
+  genreMenus: GenreMenuType[];
   open: boolean;
   onClose: () => void;
 }
 
 export function BurgerMenuMobile({
-  genreList,
+  genreMenus,
   open,
   onClose,
 }: BurgerMenuMobileProps) {
@@ -24,7 +24,7 @@ export function BurgerMenuMobile({
       >
         <BurgerMenuMobileContent
           title="Каталог"
-          genres={genreList}
+          items={genreMenus}
           onReturnBack={onClose}
           onClose={onClose}
         />
