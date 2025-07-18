@@ -7,7 +7,7 @@ import { MediaQuery } from "@/components/MediaQuery";
 interface CartItemInfoProps {
   title: string;
   authors: string;
-  bookId: string | number;
+  bookId: string;
   totalPrice: number;
 }
 
