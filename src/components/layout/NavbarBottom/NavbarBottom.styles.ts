@@ -1,12 +1,11 @@
 "use client";
 
-import {
-  styled,
-  BottomNavigationAction as BotNavAction,
+import { styled } from "@mui/material/styles";
+import BotNavAction, {
   bottomNavigationActionClasses,
-  ExtendButtonBase,
   BottomNavigationActionTypeMap,
-} from "@mui/material";
+} from "@mui/material/BottomNavigationAction";
+import { ExtendButtonBase } from "@mui/material/ButtonBase";
 
 type NavButtonProps = ExtendButtonBase<
   BottomNavigationActionTypeMap<object, "button">

@@ -1,5 +1,6 @@
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+
 import { MediaQuery } from "@/components/MediaQuery";
 import { SortMenu } from "../SortMenu";
 import { FilterMobile, FilterMobileProps } from "../FilterMobile";
@@ -10,7 +11,7 @@ interface CatalogHeaderProps extends FilterMobileProps {
 
 export function CatalogHeader({
   title,
-  genresList,
+  genreMenus,
   slug,
   ageRatings,
   publishers,
@@ -45,7 +46,7 @@ export function CatalogHeader({
           <FilterMobile
             publishers={publishers}
             ageRatings={ageRatings}
-            genresList={genresList}
+            genreMenus={genreMenus}
             slug={slug}
           />
         </MediaQuery>

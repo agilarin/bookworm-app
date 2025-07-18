@@ -1,4 +1,5 @@
-import { Stack, Typography, TypographyProps } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import Typography, { TypographyProps } from "@mui/material/Typography";
 
 type CartOrderRowVariant = "default" | "total";
 

@@ -22,16 +22,14 @@ export function SignUpForm() {
     resolver: zodResolver(SignUpSchema),
   });
 
-  const { signUp, signUpThunk, error: authError, loading } = useAuth();
+  const { signUp, error: authError, loading } = useAuth();
 
   const router = useRouter();
 
   const onSubmit = async (data: SignUpFormFields) => {
-    const resultAction = await signUp(data);
-
-    if (signUpThunk.fulfilled.match(resultAction)) {
+    await signUp(data).then(() => {
       router.refresh();
-    }
+    });
   };
 
   return (

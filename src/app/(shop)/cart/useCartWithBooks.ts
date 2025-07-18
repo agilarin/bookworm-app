@@ -40,7 +40,7 @@ export function useCartWithBooks(): UseCartWithBooksReturn {
     });
 
     return { ...cart, items };
-  }, [cart.items, books]);
+  }, [cart, books]);
 
   useEffect(() => {
     if (!isLoading || cartLoading) return;
@@ -51,7 +51,7 @@ export function useCartWithBooks(): UseCartWithBooksReturn {
     ) {
       return setIsLoading(false);
     }
-  }, [booksIsLoading, cartWithBooks, cartLoading]);
+  }, [booksIsLoading, cartWithBooks, cartLoading, isLoading, books?.length]);
 
   return {
     cart,

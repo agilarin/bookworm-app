@@ -1,9 +1,12 @@
-import { styled, Stack, IconButton, IconButtonProps } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import { useAppDispatch } from "@/hooks/reduxHooks";
 import { removeCartItem } from "@/store";
 
-export const Button = styled(IconButton)<IconButtonProps>`
+export const CustomButton = styled(IconButton)<IconButtonProps>`
   border-radius: ${({ theme }) => theme.shape.borderRadius}px;
 `;
 
@@ -20,12 +23,12 @@ export function CartItemActions({ bookId }: CartItemActionsProps) {
       direction="row"
       alignItems="center"
     >
-      <Button
+      <CustomButton
         size="small"
         onClick={handleRemove}
       >
         <DeleteOutlinedIcon />
-      </Button>
+      </CustomButton>
     </Stack>
   );
 }

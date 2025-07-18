@@ -1,6 +1,6 @@
-import { Grid } from "@mui/material";
-import { BasicCard } from "@/components/UI/BasicCard";
+import Grid from "@mui/material/Grid";
 import { BookType } from "@/types";
+import { BasicCard } from "@/components/UI/BasicCard";
 
 interface ItemListProps {
   books: BookType[];

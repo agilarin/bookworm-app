@@ -1,7 +1,10 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Stack, CircularProgress, Typography } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import CircularProgress from "@mui/material/CircularProgress";
+import Typography from "@mui/material/Typography";
+
 import { searchBooks } from "./searchBooks.action";
 import { SearchSuggestsContainer } from "../SearchSuggestsContainer";
 import { SearchResultItem } from "../SearchResultItem";

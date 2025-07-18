@@ -1,10 +1,10 @@
 "use client";
 
+import { useMemo } from "react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { MenuItem } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
-import { useMemo } from "react";
+import MenuItem from "@mui/material/MenuItem";
 
 interface FilterSelectItemProps {
   title: string;

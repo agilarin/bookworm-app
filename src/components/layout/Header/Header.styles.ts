@@ -1,6 +1,7 @@
 "use client";
 
-import { styled, AppBar, AppBarProps } from "@mui/material";
+import AppBar, { AppBarProps } from "@mui/material/AppBar";
+import { styled } from "@mui/material/styles";
 
 export const Root = styled(AppBar)<AppBarProps>`
   background-color: ${({ theme }) => theme.palette.background.paper};

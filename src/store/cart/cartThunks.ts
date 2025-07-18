@@ -17,7 +17,7 @@ import {
 export const fetchCart = createAsyncThunk("cart/fetch", async (_, thunkAPI) => {
   try {
     return await getCartAction();
-  } catch (err) {
+  } catch {
     return thunkAPI.rejectWithValue("Не удалось загрузить корзину");
   }
 });
@@ -39,7 +39,7 @@ export const addCartItem = createAsyncThunk(
         `addItem-${params.bookId}`,
         300
       );
-    } catch (err) {
+    } catch {
       return thunkAPI.rejectWithValue("Ошибка добавления товара");
     }
   }
@@ -62,7 +62,7 @@ export const removeCartItem = createAsyncThunk(
         `removeItem-${params}`,
         300
       );
-    } catch (err) {
+    } catch {
       return thunkAPI.rejectWithValue("Ошибка удаления товара");
     }
   }
@@ -85,7 +85,7 @@ export const updateCartItemQuantity = createAsyncThunk(
         `updateItemQuantity-${params.bookId}`,
         300
       );
-    } catch (err) {
+    } catch {
       return thunkAPI.rejectWithValue("Ошибка обновления товара");
     }
   }

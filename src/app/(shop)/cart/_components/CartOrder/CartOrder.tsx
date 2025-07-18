@@ -1,6 +1,10 @@
-import { Box, Paper, Button, Stack } from "@mui/material";
-import { CartOrderRow } from "./components/CartOrderRow";
+import Stack from "@mui/material/Stack";
+import Box from "@mui/material/Box";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
+
 import { CartWithBooksType } from "@/types";
+import { CartOrderRow } from "./components/CartOrderRow";
 
 interface CartOrderProps {
   cart: CartWithBooksType;

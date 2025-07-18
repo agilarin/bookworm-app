@@ -37,8 +37,10 @@ export const signUp = createAsyncThunk(
         email: user.email,
         username: user.displayName ?? "",
       };
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Ошибка регистрации");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Ошибка регистрации";
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -67,8 +69,10 @@ export const signIn = createAsyncThunk(
         email: user.email,
         username: user.displayName ?? "",
       };
-    } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.message || "Ошибка входа");
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error ? error.message : "Ошибка входа";
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );
@@ -79,8 +83,10 @@ export const signOut = createAsyncThunk("auth/signOut", async (_, thunkAPI) => {
     await deleteSession();
     thunkAPI.dispatch(clearCart());
     return null;
-  } catch (error: any) {
-    return thunkAPI.rejectWithValue(error.message || "Ошибка выхода");
+  } catch (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "Ошибка выхода";
+    return thunkAPI.rejectWithValue(errorMessage);
   }
 });
 
@@ -103,7 +109,9 @@ export const handleAuthChange = createAsyncThunk(
         username: user.displayName ?? "",
       };
     } catch (error) {
-      return thunkAPI.rejectWithValue("Не удалось обновить сессию");
+      const errorMessage =
+        error instanceof Error ? error.message : "Не удалось обновить сессию";
+      return thunkAPI.rejectWithValue(errorMessage);
     }
   }
 );

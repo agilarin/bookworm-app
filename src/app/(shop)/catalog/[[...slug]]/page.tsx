@@ -97,7 +97,7 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
             <Filter
               publishers={publishersFilter}
               ageRatings={ageRatingsFilter}
-              genresList={genreMenus || []}
+              genreMenus={genreMenus || []}
               slug={slug?.[0]}
             />
           </Grid>
@@ -109,7 +109,7 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
               title={genre?.name || "Каталог"}
               publishers={publishersFilter}
               ageRatings={ageRatingsFilter}
-              genresList={genreMenus || []}
+              genreMenus={genreMenus || []}
               slug={slug?.[0]}
             />
             <CatalogList books={books} />

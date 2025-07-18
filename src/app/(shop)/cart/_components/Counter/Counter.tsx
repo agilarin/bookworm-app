@@ -1,5 +1,5 @@
 import { ChangeEvent, useEffect, useState, FocusEvent } from "react";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
 import { useAppDispatch } from "@/hooks/reduxHooks";

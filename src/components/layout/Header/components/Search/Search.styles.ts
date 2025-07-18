@@ -1,12 +1,7 @@
-import {
-  styled,
-  InputBase,
-  InputBaseProps,
-  IconButton,
-  IconButtonProps,
-  Box,
-  BoxProps,
-} from "@mui/material";
+import Box, { BoxProps } from "@mui/material/Box";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
+import InputBase, { InputBaseProps } from "@mui/material/InputBase";
+import { styled } from "@mui/material/styles";
 
 interface InputWrapperProps extends BoxProps {
   open: boolean;
@@ -19,7 +14,7 @@ export const InputWrapper = styled(Box)<InputWrapperProps>`
   width: 100%;
   background-color: ${({ theme }) => theme.palette.background.paper};
   background-color: ${({ theme, open }) => !open && theme.palette.grey[200]};
-  border-radius: ${({ theme }) => theme.shape.borderRadius as number * 2}px;
+  border-radius: ${({ theme }) => (theme.shape.borderRadius as number) * 2}px;
 `;
 
 export const SearchInput = styled(InputBase)<InputBaseProps>`
@@ -29,10 +24,7 @@ export const SearchInput = styled(InputBase)<InputBaseProps>`
 `;
 
 export const SearchButton = styled(IconButton)<IconButtonProps>`
-  //border-radius: ${({ theme }) => theme.shape.borderRadius}px;
-
   &:hover {
     background-color: transparent;
-    // background-color: ${({ theme }) => theme.palette.primary.light};
   }
 `;

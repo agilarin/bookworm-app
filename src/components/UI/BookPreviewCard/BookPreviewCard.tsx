@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import { useMediaQuery } from "@mui/material";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { OptimizedImage } from "@/components/OptimizedImage";
 import { BookType } from "@/types";

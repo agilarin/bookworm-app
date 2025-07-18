@@ -23,14 +23,12 @@ export function SignInForm() {
   });
 
   const router = useRouter();
-  const { signIn, signInThunk, error: authError, loading } = useAuth();
+  const { signIn, error: authError, loading } = useAuth();
 
   const onSubmit = async (data: SignInFormFields) => {
-    const resultAction = await signIn(data);
-
-    if (signInThunk.fulfilled.match(resultAction)) {
+    await signIn(data).then(() => {
       router.refresh();
-    }
+    });
   };
 
   return (

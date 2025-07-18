@@ -1,4 +1,3 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -99,11 +98,7 @@ export default async function Book({ params }: BookProps) {
                 {
                   value: "reviews",
                   label: "Отзывы",
-                  item: (
-                    <Suspense fallback={"loading"}>
-                      <BookReviewsTab bookId={book.id} />
-                    </Suspense>
-                  ),
+                  item: <BookReviewsTab bookId={book.id} />,
                 },
               ]}
             />

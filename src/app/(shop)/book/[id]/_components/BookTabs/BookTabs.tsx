@@ -1,10 +1,8 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import { BookInfo } from "../BookInfoTab";
-// import { BookReviews } from "../BookReviews";
 import { BookType } from "@/types";
 import dynamic from "next/dynamic";
 
@@ -19,12 +17,6 @@ const tabs = [
   },
 ];
 
-// const { BookInfo } = dynamic(() => import("../BookInfo/BookInfo"));
-const BookReviews = dynamic(() =>
-  import("../BookReviewsTab").then((mod) => mod.BookReviews)
-);
-// const ComponentC = dynamic(() => import('../components/C'), { ssr: false })
-
 type TabListItem = {
   value: string;
   label: string;
@@ -36,7 +28,7 @@ interface BookTabsProps {
   book: BookType;
 }
 
-export function BookTabs({ tabList, book }: BookTabsProps) {
+export function BookTabs({ tabList }: BookTabsProps) {
   const [tabValue, setTabValue] = useState(tabList[0].value);
 
   return (
@@ -79,16 +71,7 @@ export function BookTabs({ tabList, book }: BookTabsProps) {
           />
         ))}
       </Tabs>
-      {/* {tabValue === "info" ? (
-        <BookInfo book={book} />
-      ) : (
-        <Suspense fallback={"Loading"}>
-          <BookReviews bookId={book.id} />
-        </Suspense>
-      )} */}
-      {/* <Suspense fallback={"Loading"}> */}
       {tabList.find(({ value }) => value === tabValue)?.item}
-      {/* </Suspense> */}
     </>
   );
 }

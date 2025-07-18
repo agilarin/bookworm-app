@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useRef, useLayoutEffect } from "react";
-import { Collapse, Typography, Link } from "@mui/material";
+import Collapse from "@mui/material/Collapse";
+import Link from "@mui/material/Link";
+import Typography from "@mui/material/Typography";
 
 interface ExpandableTextProps {
   text: string;

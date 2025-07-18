@@ -12,18 +12,20 @@ import {
   HandleAuthChangeParams,
 } from "@/store";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import { ThunkDispatchReturn } from "@/types";
+import { UnwrapThunkDispatchReturn } from "@/types";
 import { useCallback } from "react";
 
 type AuthActions = {
-  signUp: (params: SignUpParams) => ThunkDispatchReturn<typeof signUpThunk>;
-  signIn: (params: SignInParams) => ThunkDispatchReturn<typeof signInThunk>;
-  signOut: () => ThunkDispatchReturn<typeof signOutThunk>;
+  signUp: (
+    params: SignUpParams
+  ) => UnwrapThunkDispatchReturn<typeof signUpThunk>;
+  signIn: (
+    params: SignInParams
+  ) => UnwrapThunkDispatchReturn<typeof signInThunk>;
+  signOut: () => UnwrapThunkDispatchReturn<typeof signOutThunk>;
   handleAuthChange: (
     user: HandleAuthChangeParams
-  ) => ThunkDispatchReturn<typeof handleAuthChangeThunk>;
-  signUpThunk: typeof signUpThunk;
-  signInThunk: typeof signInThunk;
+  ) => UnwrapThunkDispatchReturn<typeof handleAuthChangeThunk>;
 };
 
 type UseAuthReturn = AuthState &
@@ -36,16 +38,20 @@ export function useAuth(): UseAuthReturn {
   const dispatch = useAppDispatch();
 
   const signUp = useCallback(
-    (params: SignUpParams) => dispatch(signUpThunk(params)),
+    (params: SignUpParams) => dispatch(signUpThunk(params)).unwrap(),
     [dispatch]
   );
   const signIn = useCallback(
-    (params: SignInParams) => dispatch(signInThunk(params)),
+    (params: SignInParams) => dispatch(signInThunk(params)).unwrap(),
     [dispatch]
   );
-  const signOut = useCallback(() => dispatch(signOutThunk()), [dispatch]);
+  const signOut = useCallback(
+    () => dispatch(signOutThunk()).unwrap(),
+    [dispatch]
+  );
   const handleAuthChange = useCallback(
-    (params: HandleAuthChangeParams) => dispatch(handleAuthChangeThunk(params)),
+    (params: HandleAuthChangeParams) =>
+      dispatch(handleAuthChangeThunk(params)).unwrap(),
     [dispatch]
   );
 
@@ -56,7 +62,5 @@ export function useAuth(): UseAuthReturn {
     signIn,
     signOut,
     handleAuthChange,
-    signUpThunk,
-    signInThunk,
   };
 }

@@ -1,14 +1,15 @@
 "use client";
 
 import useEmblaCarousel from "embla-carousel-react";
-import { BookType } from "@/types";
 import Stack from "@mui/material/Stack";
+import useMediaQuery from "@mui/material/useMediaQuery";
+
+import { BookType } from "@/types";
 import { BookPreviewCard } from "../UI/BookPreviewCard";
 import {
   CarouselPrevNextButton,
   useCarouselPrevNextButtons,
 } from "../UI/CarouselPrevNextButton";
-import { useMediaQuery } from "@mui/material";
 
 interface BookPreviewCarouselSectionProps {
   items: BookType[];

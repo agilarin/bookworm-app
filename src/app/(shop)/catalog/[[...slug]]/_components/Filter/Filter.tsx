@@ -11,7 +11,7 @@ interface FilterProps extends CategoryProps {
 }
 
 export function Filter({
-  genresList,
+  genreMenus,
   slug,
   ageRatings,
   publishers,
@@ -25,7 +25,7 @@ export function Filter({
         <FilterItem title="Жанры">
           <Category
             slug={slug}
-            genresList={genresList}
+            genreMenus={genreMenus}
           />
         </FilterItem>
 

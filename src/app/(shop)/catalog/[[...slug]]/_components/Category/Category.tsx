@@ -1,49 +1,15 @@
-import { Stack } from "@mui/material";
+import Stack from "@mui/material/Stack";
 import { CategoryItem } from "./components/CategoryItem";
-import { GenreType } from "@/types";
-
-function getGenres(genres: GenreType[], genreSlug: string | undefined) {
-  let parentGenre: GenreType | undefined;
-  let genreList: GenreType[] | undefined = genres;
-
-  const getCurrentGenre = (
-    genres: GenreType[],
-    genreSlug: string | undefined
-  ): GenreType | undefined => {
-    for (let i = 0; i < genres.length; i++) {
-      const genre = genres[i];
-      if (genre.id === genreSlug) {
-        genreList = genre.genres;
-        return genre;
-      } else if (genre.genres) {
-        const currentGenre = getCurrentGenre(genre.genres, genreSlug);
-        if (currentGenre) {
-          if (!parentGenre) {
-            parentGenre = genre;
-          }
-          return currentGenre;
-        }
-      }
-    }
-  };
-  const currentGenre = getCurrentGenre(genres, genreSlug);
-  return {
-    parentGenre,
-    currentGenre,
-    genreList,
-  };
-}
+import { GenreMenuType } from "@/types";
+import { useCategoryState } from "./useCategoryState";
 
 export interface CategoryProps {
-  genresList: GenreType[];
+  genreMenus: GenreMenuType[];
   slug?: string;
 }
 
-export function Category({ genresList, slug }: CategoryProps) {
-  const { parentGenre, currentGenre, genreList } = getGenres(
-    genresList || [],
-    slug
-  );
+export function Category({ genreMenus, slug }: CategoryProps) {
+  const { parent, current, list } = useCategoryState(genreMenus, slug);
 
   return (
     <Stack gap={0.25}>
@@ -54,29 +20,29 @@ export function Category({ genresList, slug }: CategoryProps) {
         active={!slug}
       />
 
-      {parentGenre && (
+      {parent && (
         <CategoryItem
-          value={parentGenre.name}
-          href={`/catalog/${parentGenre.id}`}
+          value={parent.name}
+          href={`/catalog/${parent.id}`}
           back
         />
       )}
 
-      {currentGenre && (
+      {current && (
         <CategoryItem
-          value={currentGenre.name}
-          href={`/catalog/${currentGenre.id}`}
-          active={currentGenre.id === slug}
+          value={current.name}
+          href={`/catalog/${current.id}`}
+          active={current.id === slug}
           nestingLevel={1}
         />
       )}
 
-      {genreList?.map(({ name, id }) => (
+      {list?.map(({ name, id }) => (
         <CategoryItem
           key={id}
           value={name}
           href={`/catalog/${id}`}
-          nestingLevel={parentGenre ? 2 : 1}
+          nestingLevel={current ? 2 : 1}
         />
       ))}
     </Stack>
