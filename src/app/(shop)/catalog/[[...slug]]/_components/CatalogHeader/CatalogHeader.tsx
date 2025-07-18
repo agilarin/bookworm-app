@@ -22,7 +22,7 @@ export function CatalogHeader({
       alignItems={{ md: "center" }}
       pt={{ xs: 3, md: 1.5 }}
       pb={1}
-      px={{ md: 2 }}
+      px={2}
       gap={1.5}
     >
       <Typography

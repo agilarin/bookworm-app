@@ -2,24 +2,19 @@ import Link from "next/link";
 import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { CartItemType } from "@/types";
+import { CartItemWithBookType } from "@/types";
 import { Counter } from "../Counter";
 import { CartItemInfo } from "./components/CartItemInfo";
 import { CartItemActions } from "./components/CartItemActions";
-import { ImagePicture } from "@/components/ImagePicture";
+import { OptimizedImage } from "@/components/OptimizedImage";
 import { MediaQuery } from "@/components/MediaQuery";
 
 interface CartItemProps {
-  item: CartItemType;
+  item: CartItemWithBookType;
 }
 
 export function CartItem({ item }: CartItemProps) {
   const book = item.book;
-
-  if (!book) {
-    return;
-  }
-
   const totalPrice = item.quantity * book.price;
   const authors = book.authors.map((item) => item.name).join(" ,");
 
@@ -38,14 +33,15 @@ export function CartItem({ item }: CartItemProps) {
         spacing={2}
       >
         <Link href={`/book/${item.bookId}`}>
-          <ImagePicture
+          <OptimizedImage
             images={book.images}
-            defaultCover="cover_100"
-            imageEl={(img) => (
+            covers={[100, 100]}
+            alt={book.title}
+            defaultCover={100}
+            imgComponent={(props) => (
               <Box
                 component="img"
-                src={img}
-                alt={book.title}
+                {...props}
                 borderRadius={1}
                 width={90}
                 sx={{ objectFit: "cover", aspectRatio: "2 / 3" }}

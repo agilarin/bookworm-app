@@ -1,15 +1,15 @@
 import Stack from "@mui/material/Stack";
-import { getGenresList } from "@/lib/firebase/genres";
+import { getGenreMenus } from "@/lib/server/genres";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { NavbarBottom } from "@/components/NavbarBottom";
+import { NavbarBottom } from "@/components/layout/NavbarBottom";
 
 export default async function Layout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const genresList = await getGenresList();
+  const genreMenus = await getGenreMenus();
 
   return (
     <Stack
@@ -31,7 +31,7 @@ export default async function Layout({
       </Stack>
 
       <Footer />
-      <NavbarBottom genreList={genresList || []} />
+      <NavbarBottom genreList={genreMenus || []} />
     </Stack>
   );
 }

@@ -2,14 +2,7 @@
 
 import { Breakpoint } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
-
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
-  T,
-  Exclude<keyof T, Keys>
-> &
-  {
-    [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
-  }[Keys];
+import { RequireAtLeastOne } from "@/types";
 
 interface MediaQueryProps {
   minWidth?: Breakpoint | number;

@@ -15,6 +15,7 @@ export function Search() {
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   return (
     <Stack
@@ -36,7 +37,7 @@ export function Search() {
             type="text"
             placeholder="Поиск..."
             value={searchTerm}
-            onClick={() => setOpen(true)}
+            onClick={handleOpen}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Stack direction="row">
@@ -54,7 +55,7 @@ export function Search() {
               </S.SearchButton>
             )}
             <S.SearchButton color="inherit">
-              <SearchIcon sx={{ color: "grey.700" }} />
+              <SearchIcon sx={{ color: "grey.900" }} />
             </S.SearchButton>
           </Stack>
         </S.InputWrapper>

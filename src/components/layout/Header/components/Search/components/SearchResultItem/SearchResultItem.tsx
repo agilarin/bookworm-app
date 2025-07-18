@@ -5,7 +5,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { BookType } from "@/types";
-import { ImagePicture } from "@/components/ImagePicture";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 interface SearchResultItemProps {
   book: BookType;
@@ -27,14 +27,15 @@ export function SearchResultItem({ book, onClick }: SearchResultItemProps) {
       borderRadius={1}
       sx={{ ":hover": { bgcolor: "grey.200" } }}
     >
-      <ImagePicture
+      <OptimizedImage
         images={book.images}
-        defaultCover="cover_100"
-        imageEl={(img) => (
+        covers={[100, 100]}
+        defaultCover={100}
+        alt={book.title}
+        imgComponent={(props) => (
           <Box
             component="img"
-            src={img}
-            alt={book.title}
+            {...props}
             borderRadius={0.5}
             minWidth={52}
             width={52}

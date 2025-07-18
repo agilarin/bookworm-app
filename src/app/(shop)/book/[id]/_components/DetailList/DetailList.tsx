@@ -14,7 +14,7 @@ export function DetailList({ details }: DetailListProps) {
     <Stack gap={1}>
       {details.map(
         ({ name, value }) =>
-          value && (
+          !!value && (
             <Stack
               key={name}
               component="p"

@@ -3,15 +3,17 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+
 import { MediaQuery } from "@/components/MediaQuery";
-import { getGenresList } from "@/lib/firebase/genres";
+import { getGenreMenus } from "@/lib/server/genres";
 import { BurgerMenu } from "./components/BurgerMenu";
 import { Search } from "./components/Search";
 import { CartButton } from "./components/CartButton";
+import { UserButton } from "./components/UserButton";
 import * as S from "./Header.styles";
 
 export async function Header() {
-  const genresList = await getGenresList();
+  const genreMenus = await getGenreMenus();
 
   return (
     <S.Root position="sticky">
@@ -40,7 +42,7 @@ export async function Header() {
                     BookWorm
                   </Typography>
                 </Link>
-                <BurgerMenu genresList={genresList || []} />
+                <BurgerMenu genresList={genreMenus || []} />
               </Stack>
             </MediaQuery>
 
@@ -51,9 +53,10 @@ export async function Header() {
                 flex={1}
                 direction="row"
                 justifyContent="flex-end"
-                spacing={{ xs: 1, md: 2 }}
+                gap={{ xs: 1, md: 2 }}
               >
                 <CartButton />
+                <UserButton />
               </Stack>
             </MediaQuery>
           </Stack>

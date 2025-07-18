@@ -1,10 +1,11 @@
-import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Paper from "@mui/material/Paper";
-import { getBooks, getBooksById } from "@/lib/firebase/books";
-import { getGenresList } from "@/lib/firebase/genres";
-import { SliderSection } from "@/components/SliderSection";
-import { BookPreviewSliderSection } from "@/components/BookPreviewSliderSection";
+
+import { getBooks, getBooksById } from "@/lib/server/books";
+import { getGenreMenus } from "@/lib/server/genres";
+import { CarouselSection } from "@/components/CarouselSection";
+import { ShopContainer } from "@/components/UI/ShopContainer";
+import { BookPreviewCarouselSection } from "@/components/BookPreviewCarouselSection";
 
 const booksPreviewIds = [
   "RtyKqolIJxvyiytGcLi2",
@@ -14,13 +15,13 @@ const booksPreviewIds = [
 ];
 
 export default async function Home() {
-  const GenreList = await getGenresList();
+  const genreMenus = await getGenreMenus();
   const [booksPreview, popularBooks, ...genresBooks] = await Promise.all([
     getBooksById(booksPreviewIds),
     getBooks({ sort: "popularDesc", limit: 10 }),
-    ...(GenreList || [])?.map((genre) => {
+    ...(genreMenus || [])?.map((item) => {
       return getBooks({
-        genresId: genre.genresId,
+        genreIds: item.genreIds,
         sort: "ratingDesc",
         limit: 10,
       });
@@ -28,17 +29,17 @@ export default async function Home() {
   ]);
 
   return (
-    <Container>
+    <ShopContainer>
       <Stack
         paddingY={2}
         gap={{ xs: 1, md: 2.5 }}
       >
         <Paper elevation={0}>
-          <BookPreviewSliderSection items={booksPreview} />
+          <BookPreviewCarouselSection items={booksPreview} />
         </Paper>
 
         <Paper elevation={0}>
-          <SliderSection
+          <CarouselSection
             title="Популярное"
             href={`/catalog?sort=popularDesc`}
             items={popularBooks.books}
@@ -47,17 +48,17 @@ export default async function Home() {
 
         {genresBooks?.map(({ books }, i) => (
           <Paper
-            key={GenreList?.[i].id}
+            key={genreMenus?.[i].id}
             elevation={0}
           >
-            <SliderSection
-              title={GenreList?.[i].name}
-              href={`/catalog/${GenreList?.[i].id}`}
+            <CarouselSection
+              title={genreMenus?.[i].name}
+              href={`/catalog/${genreMenus?.[i].id}`}
               items={books}
             />
           </Paper>
         ))}
       </Stack>
-    </Container>
+    </ShopContainer>
   );
 }

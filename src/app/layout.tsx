@@ -1,11 +1,9 @@
 import type { Metadata } from "next";
-import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
-import { ThemeProvider } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import { StoreProvider } from "@/components/providers/StoreProvider";
-import { ReactQueryProvider } from "@/components/providers/ReactQueryProvider";
-import { theme } from "@/styles/theme";
 import { Roboto } from "next/font/google";
+
+import { AppProviders } from "@/components/providers/AppProviders";
+import { CartLoader } from "@/components/CartLoader";
+import { AuthModal } from "@/components/AuthModal";
 
 const roboto = Roboto({
   weight: ["300", "400", "500", "700"],
@@ -30,16 +28,11 @@ export default async function RootLayout({
   return (
     <html lang="ru">
       <body className={roboto.variable}>
-        <StoreProvider>
-          <AppRouterCacheProvider>
-            <ThemeProvider theme={theme}>
-              <ReactQueryProvider>
-                <CssBaseline />
-                {children}
-              </ReactQueryProvider>
-            </ThemeProvider>
-          </AppRouterCacheProvider>
-        </StoreProvider>
+        <AppProviders>
+          <CartLoader />
+          {children}
+          <AuthModal />
+        </AppProviders>
       </body>
     </html>
   );

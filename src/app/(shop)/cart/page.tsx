@@ -1,49 +1,27 @@
 "use client";
 
-import { useMemo } from "react";
-import { selectCart } from "@/redux";
-import { useQuery } from "@tanstack/react-query";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import Grid from "@mui/material/Grid";
-import Container from "@mui/material/Container";
+
+import { ShopContainer } from "@/components/UI/ShopContainer";
+import { FullPageLoader } from "@/components/UI/Loader";
 import { EmptyCart } from "./_components/EmptyCart";
-import { useAppSelector } from "@/hooks/useAppSelector";
-import { FullPageLoader } from "@/components/FullPageLoader";
-import { getCartItems } from "./getCartItems.action";
 import { CartContent } from "./_components/CartContent";
 import { CartOrder } from "./_components/CartOrder";
+import { useCartWithBooks } from "./useCartWithBooks";
 
 export default function Cart() {
-  const isDownMD = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  const cart = useAppSelector(selectCart);
-  const cartItemsId = cart.items.map((item) => item.bookId);
-  const { data: books } = useQuery({
-    queryKey: ["cartItems", cartItemsId],
-    queryFn: () => getCartItems(cartItemsId),
-    enabled: !!cartItemsId.length,
-  });
+  const { isLoading, cart, cartWithBooks } = useCartWithBooks();
 
-  const fetchedCart = useMemo(() => {
-    const items = cart.items.map((item) => ({
-      ...item,
-      book: books?.find((book) => book.id === item.bookId),
-    }));
-    return {
-      ...cart,
-      items: items.filter(({ book }) => !!book),
-    };
-  }, [cart, books]);
-
-  if (!cart || !cart.items.length) {
+  if (!isLoading && !cart?.items?.length) {
     return <EmptyCart />;
   }
 
-  if (!fetchedCart.items.length) {
+  if (isLoading && !cartWithBooks?.items?.length) {
     return <FullPageLoader />;
   }
 
   return (
-    <Container disableGutters={isDownMD}>
+    <ShopContainer>
       <Grid
         container
         position="relative"
@@ -54,7 +32,7 @@ export default function Cart() {
           size={{ xs: 12, md: "grow" }}
           paddingY={{ md: 2 }}
         >
-          <CartContent cart={fetchedCart} />
+          <CartContent cart={cartWithBooks} />
         </Grid>
 
         <Grid
@@ -64,9 +42,9 @@ export default function Cart() {
           top={64}
           position={{ md: "sticky" }}
         >
-          <CartOrder cart={fetchedCart} />
+          <CartOrder cart={cartWithBooks} />
         </Grid>
       </Grid>
-    </Container>
+    </ShopContainer>
   );
 }

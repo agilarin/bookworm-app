@@ -1,13 +1,20 @@
 import { notFound } from "next/navigation";
-import Container from "@mui/material/Container";
+// import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
+
 import { BooksSortFieldValues, GenerateMetadataProps } from "@/types";
-import { getBooks, getBooksFilter } from "@/lib/firebase/books";
-import { getGenreById, getGenresList } from "@/lib/firebase/genres";
+import { getBooks } from "@/lib/server/books";
+import { getBooksFilter } from "@/lib/server/bookFilters";
+import {
+  getGenreById,
+  getGenreMenuById,
+  getGenreMenus,
+} from "@/lib/server/genres";
 import { MediaQuery } from "@/components/MediaQuery";
+import { ShopContainer } from "@/components/UI/ShopContainer";
 import { Filter } from "./_components/Filter";
-import { ItemList } from "./_components/ItemList";
+import { CatalogList } from "./_components/CatalogList";
 import { CatalogHeader } from "./_components/CatalogHeader";
 import { CatalogFooter } from "./_components/CatalogFooter";
 
@@ -45,20 +52,22 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
   const { slug } = await params;
   const { sort, page, ageRatings, publishers } = await searchParams;
 
-  const genre = slug && (await getGenreById(slug[0]));
-  if (slug && !genre) {
+  const [genreMenu, genre] = await Promise.all(
+    slug ? [getGenreMenuById(slug[0]), getGenreById(slug[0])] : []
+  );
+  if (slug && !genre && !genreMenu) {
     notFound();
   }
 
   const commonArg = {
-    genresId: genre?.genresId || genre?.id,
-    publishersId: publishers,
+    genreIds: genreMenu?.genreIds || genre?.id,
+    publisherIds: publishers,
     ageRatings,
   };
 
-  const [genresList, { pages, books }, ageRatingsFilter, publishersFilter] =
+  const [genreMenus, { pages, books }, ageRatingsFilter, publishersFilter] =
     await Promise.all([
-      getGenresList(),
+      getGenreMenus(),
       getBooks({
         ...commonArg,
         page: page,
@@ -75,7 +84,7 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
     ]);
 
   return (
-    <Container>
+    <ShopContainer>
       <Grid
         container
         position="relative"
@@ -88,7 +97,7 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
             <Filter
               publishers={publishersFilter}
               ageRatings={ageRatingsFilter}
-              genresList={genresList || []}
+              genresList={genreMenus || []}
               slug={slug?.[0]}
             />
           </Grid>
@@ -100,10 +109,10 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
               title={genre?.name || "Каталог"}
               publishers={publishersFilter}
               ageRatings={ageRatingsFilter}
-              genresList={genresList || []}
+              genresList={genreMenus || []}
               slug={slug?.[0]}
             />
-            <ItemList books={books} />
+            <CatalogList books={books} />
 
             {Number(pages) > 1 && (
               <CatalogFooter
@@ -114,6 +123,6 @@ export default async function Catalog({ params, searchParams }: CatalogProps) {
           </Paper>
         </Grid>
       </Grid>
-    </Container>
+    </ShopContainer>
   );
 }

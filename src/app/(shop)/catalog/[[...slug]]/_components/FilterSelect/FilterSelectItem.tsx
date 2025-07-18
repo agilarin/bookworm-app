@@ -4,6 +4,7 @@ import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { MenuItem } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import Typography from "@mui/material/Typography";
+import { useMemo } from "react";
 
 interface FilterSelectItemProps {
   title: string;
@@ -19,10 +20,12 @@ export function FilterSelectItem({
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const defaultChecked = new URLSearchParams(searchParams).has(
-    searchParamsName,
-    searchParamsValue
-  );
+  const defaultChecked = useMemo(() => {
+    return new URLSearchParams(searchParams).has(
+      searchParamsName,
+      searchParamsValue
+    );
+  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const params = new URLSearchParams(searchParams);

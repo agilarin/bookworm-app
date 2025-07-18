@@ -1,14 +1,14 @@
-"use client"
+"use client";
 
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import { CartItem } from "../CartItem";
-import { CartType } from "@/types";
+import { CartWithBooksType } from "@/types";
 
 interface CartContentProps {
-  cart: CartType;
+  cart: CartWithBooksType;
 }
 
 export function CartContent({ cart }: CartContentProps) {
@@ -29,7 +29,7 @@ export function CartContent({ cart }: CartContentProps) {
           paddingTop={1.5}
           spacing={2}
         >
-          {Object.values(cart.items).map((item) => (
+          {cart.items.map((item) => (
             <CartItem
               key={item.bookId}
               item={item}

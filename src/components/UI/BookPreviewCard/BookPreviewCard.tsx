@@ -1,42 +1,43 @@
 "use client";
 
-import { ImagePicture } from "@/components/ImagePicture";
-import { BookType } from "@/types";
+import Link from "next/link";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import { useMediaQuery } from "@mui/material";
-import Link from "next/link";
+
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { BookType } from "@/types";
 
 interface BookPreviewCardProps {
   book: BookType;
 }
 
 export function BookPreviewCard({ book }: BookPreviewCardProps) {
-  const isUpSM = useMediaQuery((theme) => theme.breakpoints.up("sm"));
+  const isUpMD = useMediaQuery((theme) => theme.breakpoints.up("md"));
   const authors = book.authors.map(({ name }) => name).join(", ");
 
   return (
     <Card elevation={0}>
       <Stack
-        direction={{ sm: "row" }}
+        direction={{ md: "row" }}
         alignItems="center"
       >
         <Stack
           minWidth={{ xs: "160px", md: "240px" }}
           maxWidth={{ xs: "160px", md: "240px" }}
         >
-          <ImagePicture
+          <OptimizedImage
             images={book.images}
-            covers={["cover_200", "cover_330"]}
-            defaultCover="cover_200"
-            imageEl={(img) => (
+            covers={[200, 330]}
+            defaultCover={200}
+            alt={book.title}
+            imgComponent={(props) => (
               <CardMedia
                 component="img"
-                image={img}
-                alt={book.title}
+                {...props}
                 sx={{
                   width: "260px",
                   borderRadius: 1,
@@ -48,14 +49,14 @@ export function BookPreviewCard({ book }: BookPreviewCardProps) {
           />
         </Stack>
         <Stack
-          alignItems={{ xs: "center", sm: "flex-start" }}
+          alignItems={{ xs: "center", md: "flex-start" }}
           paddingY={{ xs: 2, sm: 2, md: 2 }}
           paddingX={{ xs: 1, sm: 2, md: 4 }}
         >
-          {!isUpSM && authors && (
+          {!isUpMD && authors && (
             <Typography
               component="div"
-              textAlign={{ xs: "center", sm: "start" }}
+              textAlign={{ xs: "center", md: "start" }}
               color="textSecondary"
             >
               {authors}
@@ -63,12 +64,12 @@ export function BookPreviewCard({ book }: BookPreviewCardProps) {
           )}
           <Typography
             component="div"
-            marginBottom={{ sm: 1.5 }}
-            marginTop={{ xs: 1.5, sm: 0 }}
+            marginBottom={{ md: 1.5 }}
+            marginTop={{ xs: 1.5, md: 0 }}
             fontSize={{ xs: 24, md: 36 }}
             lineHeight={1.2}
             fontWeight={500}
-            textAlign={{ xs: "center", sm: "start" }}
+            textAlign={{ xs: "center", md: "start" }}
             sx={{
               display: "-webkit-box",
               overflow: "hidden",
@@ -78,10 +79,10 @@ export function BookPreviewCard({ book }: BookPreviewCardProps) {
           >
             {book.title}
           </Typography>
-          {isUpSM && authors && (
+          {isUpMD && authors && (
             <Typography
               component="div"
-              textAlign={{ xs: "center", sm: "start" }}
+              textAlign={{ xs: "center", md: "start" }}
               color="textSecondary"
             >
               {authors}
@@ -89,7 +90,7 @@ export function BookPreviewCard({ book }: BookPreviewCardProps) {
           )}
           <Typography
             marginTop={2}
-            textAlign={{ xs: "center", sm: "start" }}
+            textAlign={{ xs: "center", md: "start" }}
             sx={{
               display: "-webkit-box",
               overflow: "hidden",

@@ -1,16 +1,21 @@
-import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import { GenerateMetadataProps } from "@/types";
-import { getBookById } from "@/lib/firebase/books";
-import { ImagePicture } from "@/components/ImagePicture";
-import { MediaQuery } from "@/components/MediaQuery";
-import { RatingInfo } from "./_components/RatingInfo";
-import { BookContent } from "./_components/BookContent";
-import * as S from "./Book.styles";
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
+import Grid from "@mui/material/Grid";
+import Paper from "@mui/material/Paper";
+
+import { GenerateMetadataProps } from "@/types";
+import { getBookById } from "@/lib/server/books";
+import { OptimizedImage } from "@/components/OptimizedImage";
+import { MediaQuery } from "@/components/MediaQuery";
+import { ShopContainer } from "@/components/UI/ShopContainer";
+
+import { BookAbout } from "./_components/BookAbout";
+import { BookCartActions } from "./_components/BookCartActions";
+import { BookTabs } from "./_components/BookTabs";
+import { BookCartActionsMobile } from "./_components/BookCartActionsMobile";
+import { BookInfoTab } from "./_components/BookInfoTab";
+import { BookReviewsTab } from "./_components/BookReviewsTab";
+import * as S from "./Book.styles";
 
 type BookParams = Promise<{ id: string }>;
 
@@ -44,83 +49,68 @@ export default async function Book({ params }: BookProps) {
   if (!book) {
     notFound();
   }
-  const authors = book?.authors.map((author) => author.name).join(", ");
 
   return (
-    <Container
-      // disableGutters={isDownMD}
-      sx={{ my: 3 }}
-    >
+    <ShopContainer>
       <Grid
         container
-        gap={{ md: 3 }}
+        gap={{ xs: 2, md: 3 }}
+        my={3}
       >
         <Grid
           size={{ xs: 12, md: "auto" }}
           display="flex"
           flexDirection="column"
           alignItems="center"
+        >
+          <OptimizedImage
+            images={book.images}
+            covers={[200, 330]}
+            defaultCover={200}
+            alt={book.title}
+            imgComponent={(props) => <S.ImagePreview {...props} />}
+          />
+        </Grid>
+
+        <Grid
+          display="flex"
+          flexDirection="column"
+          size={{ xs: 12, md: "grow" }}
           gap={2}
         >
-          <ImagePicture
-            images={book.images}
-            covers={["cover_200", "cover_330"]}
-            defaultCover="cover_200"
-            imageEl={(img) => (
-              <S.ImagePreview
-                src={img}
-                alt={book?.title}
+          <BookAbout book={book} />
+          <MediaQuery minWidth="md">
+            <Paper elevation={0}>
+              <BookCartActions
+                bookId={book.id}
+                price={book.price}
               />
-            )}
-          />
-
-          <MediaQuery maxWidth="md">
-            <Stack
-              direction="column"
-              alignItems="center"
-              gap={1}
-              mb={1}
-            >
-              <Box>
-                <Typography
-                  color="textSecondary"
-                  textAlign="center"
-                  component="div"
-                >
-                  {authors}
-                </Typography>
-                <Typography
-                  component="h1"
-                  variant="h5"
-                  textAlign="center"
-                  fontWeight={500}
-                >
-                  {book?.title}
-                </Typography>
-              </Box>
-              <Box marginTop={0.5}>
-                <RatingInfo
-                  value={book.ratingValue}
-                  count={book.ratingCount}
-                />
-              </Box>
-              <Typography
-                component="div"
-                variant="h5"
-                fontSize={28}
-                fontWeight={500}
-                color="primary"
-              >
-                {book?.price} ₽
-              </Typography>
-            </Stack>
+            </Paper>
           </MediaQuery>
-        </Grid>
-
-        <Grid size={{ xs: 12, md: "grow" }}>
-          <BookContent book={book} />
+          <Paper elevation={0}>
+            <BookTabs
+              book={book}
+              tabList={[
+                {
+                  value: "info",
+                  label: "О книге",
+                  item: <BookInfoTab book={book} />,
+                },
+                {
+                  value: "reviews",
+                  label: "Отзывы",
+                  item: (
+                    <Suspense fallback={"loading"}>
+                      <BookReviewsTab bookId={book.id} />
+                    </Suspense>
+                  ),
+                },
+              ]}
+            />
+          </Paper>
+          <BookCartActionsMobile bookId={book.id} />
         </Grid>
       </Grid>
-    </Container>
+    </ShopContainer>
   );
 }

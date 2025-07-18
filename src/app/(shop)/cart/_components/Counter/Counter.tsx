@@ -2,16 +2,16 @@ import { ChangeEvent, useEffect, useState, FocusEvent } from "react";
 import { Box } from "@mui/material";
 import AddRoundedIcon from "@mui/icons-material/AddRounded";
 import RemoveRoundedIcon from "@mui/icons-material/RemoveRounded";
-import { useAppDispatch } from "@/hooks/useAppDispatch";
-import {
-  decrementQuantityItemCart,
-  incrementQuantityItemCart,
-  updateItemCart,
-} from "@/redux/cartSlice";
+import { useAppDispatch } from "@/hooks/reduxHooks";
+import { updateCartItemQuantity } from "@/store";
 import * as S from "./Counter.styles";
-import { CartItemType } from "@/types/index";
 
-export function Counter({ bookId, quantity }: CartItemType) {
+interface CounterProps {
+  bookId: string;
+  quantity: number;
+}
+
+export function Counter({ bookId, quantity }: CounterProps) {
   const [value, setValue] = useState(quantity);
   const dispatch = useAppDispatch();
 
@@ -21,22 +21,24 @@ export function Counter({ bookId, quantity }: CartItemType) {
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = Number(event.target.value);
-    if (!isNaN(value)) {
+    if (!isNaN(value) && value > 0) {
       setValue(value);
     }
   };
   const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
-    const value = Number(event.target.value);
-    if (!isNaN(value) && value > 0) {
-      dispatch(updateItemCart({ bookId, quantity: value }));
+    const newValue = Number(event.target.value);
+    if (newValue === quantity) return;
+
+    if (!isNaN(newValue) && newValue > 0) {
+      dispatch(updateCartItemQuantity({ bookId, quantity: newValue }));
     } else {
-      dispatch(updateItemCart({ bookId, quantity: 1 }));
+      dispatch(updateCartItemQuantity({ bookId, quantity: 1 }));
     }
   };
   const handleDecrement = () =>
-    dispatch(decrementQuantityItemCart({ bookId, quantity: quantity - 1 }));
+    dispatch(updateCartItemQuantity({ bookId, quantity: quantity - 1 }));
   const handleIncrement = () =>
-    dispatch(incrementQuantityItemCart({ bookId, quantity: quantity + 1 }));
+    dispatch(updateCartItemQuantity({ bookId, quantity: quantity + 1 }));
 
   return (
     <Box

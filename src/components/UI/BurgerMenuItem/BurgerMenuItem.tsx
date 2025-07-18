@@ -4,7 +4,7 @@ import Link from "next/link";
 import MenuItem, { menuItemClasses } from "@mui/material/MenuItem";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
-import { GenreType } from "@/types/book";
+import { GenreType } from "@/types/bookTypes";
 import ArrowForwardIosRoundedIcon from "@mui/icons-material/ArrowForwardIosRounded";
 
 interface BurgerMenuItemProps {

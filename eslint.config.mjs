@@ -11,6 +11,27 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [
+            {
+              name: "@mui/material",
+              message:
+                "Импортируй конкретный компонент, например: @mui/material/TextField",
+            },
+            {
+              name: "@mui/icons-material",
+              message:
+                "Импортируй конкретную иконку, например: @mui/icons-material/Add",
+            },
+          ],
+        },
+      ],
+    },
+  },
 ];
 
 export default eslintConfig;

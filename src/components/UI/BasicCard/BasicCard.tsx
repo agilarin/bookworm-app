@@ -4,7 +4,7 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { BookType } from "@/types";
-import { ImagePicture } from "../../ImagePicture";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 interface BasicCardProps {
   book: BookType;
@@ -19,15 +19,15 @@ export function BasicCard({ book }: BasicCardProps) {
       sx={{ maxWidth: 180, width: "100%" }}
     >
       <Link href={`/book/${book.id}`}>
-        <ImagePicture
+        <OptimizedImage
           images={book.images}
-          covers={["cover_200", "cover_330"]}
-          defaultCover="cover_200"
-          imageEl={(img) => (
+          alt={book.title}
+          covers={[200, 330]}
+          defaultCover={200}
+          imgComponent={(props) => (
             <CardMedia
               component="img"
-              image={img}
-              alt={book.title}
+              {...props}
               sx={{
                 borderRadius: 1,
                 aspectRatio: "2 / 3",

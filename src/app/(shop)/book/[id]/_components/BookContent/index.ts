@@ -1,1 +1,0 @@
-export { BookContent } from "./BookContent";

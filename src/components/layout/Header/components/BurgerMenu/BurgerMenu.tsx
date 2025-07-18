@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import Menu from "@mui/material/Menu";
 import Stack from "@mui/material/Stack";
-import { GenreType } from "@/types/book";
+import { GenreType } from "@/types/bookTypes";
 import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
 import { BurgerMenuItem } from "@/components/UI/BurgerMenuItem";
 import * as S from "./BurgerMenu.styles";
