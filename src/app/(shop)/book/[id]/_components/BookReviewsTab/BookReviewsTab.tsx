@@ -1,11 +1,19 @@
 "use client";
 
-import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useQueryClient,
+  InfiniteData,
+} from "@tanstack/react-query";
 import Stack from "@mui/material/Stack";
 
 import { BookReviewType } from "@/types";
+import {
+  getBookReviews,
+  CursorType,
+  GetBookReviewsResponse,
+} from "@/lib/client/bookRewiews";
 import { BookReviewForm } from "../BookReviewForm";
-import { getBookReviews, CursorType } from "@/lib/client/bookRewiews";
 import { ReviewList } from "../ReviewList";
 
 // const items: BookReviewType[] = [
@@ -70,19 +78,22 @@ export function BookReviewsTab({ bookId }: BookReviewsTabProps) {
   const reviews = data?.pages.flatMap((page) => page.reviews) ?? [];
 
   const onSuccess = (newReview: BookReviewType) => {
-    queryClient.setQueryData(["bookReviews", bookId], (old: any) => {
-      if (!old) return old;
+    queryClient.setQueryData<InfiniteData<GetBookReviewsResponse, CursorType>>(
+      ["bookReviews", bookId],
+      (old) => {
+        if (!old) return old;
 
-      const updatedFirstPage = {
-        ...old.pages[0],
-        reviews: [newReview, ...old.pages[0].reviews],
-      };
+        const updatedFirstPage = {
+          ...old.pages[0],
+          reviews: [newReview, ...old.pages[0].reviews],
+        };
 
-      return {
-        ...old,
-        pages: [updatedFirstPage, ...old.pages.slice(1)],
-      };
-    });
+        return {
+          ...old,
+          pages: [updatedFirstPage, ...old.pages.slice(1)],
+        };
+      }
+    );
   };
 
   return (

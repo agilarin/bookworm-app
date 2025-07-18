@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  AuthState,
+  // AuthState,
   selectAuth,
   signOut as signOutThunk,
   signUp as signUpThunk,
@@ -12,28 +12,28 @@ import {
   HandleAuthChangeParams,
 } from "@/store";
 import { useAppDispatch, useAppSelector } from "./reduxHooks";
-import { UnwrapThunkDispatchReturn } from "@/types";
+// import { UnwrapThunkDispatchReturn } from "@/types";
 import { useCallback } from "react";
 
-type AuthActions = {
-  signUp: (
-    params: SignUpParams
-  ) => UnwrapThunkDispatchReturn<typeof signUpThunk>;
-  signIn: (
-    params: SignInParams
-  ) => UnwrapThunkDispatchReturn<typeof signInThunk>;
-  signOut: () => UnwrapThunkDispatchReturn<typeof signOutThunk>;
-  handleAuthChange: (
-    user: HandleAuthChangeParams
-  ) => UnwrapThunkDispatchReturn<typeof handleAuthChangeThunk>;
-};
+// type AuthActions = {
+//   signUp: (
+//     params: SignUpParams
+//   ) => UnwrapThunkDispatchReturn<typeof signUpThunk>;
+//   signIn: (
+//     params: SignInParams
+//   ) => UnwrapThunkDispatchReturn<typeof signInThunk>;
+//   signOut: () => UnwrapThunkDispatchReturn<typeof signOutThunk>;
+//   handleAuthChange: (
+//     user: HandleAuthChangeParams
+//   ) => UnwrapThunkDispatchReturn<typeof handleAuthChangeThunk>;
+// };
 
-type UseAuthReturn = AuthState &
-  AuthActions & {
-    isAuth: boolean;
-  };
+// type UseAuthReturn = AuthState &
+//   AuthActions & {
+//     isAuth: boolean;
+//   };
 
-export function useAuth(): UseAuthReturn {
+export function useAuth() {
   const auth = useAppSelector(selectAuth);
   const dispatch = useAppDispatch();
 

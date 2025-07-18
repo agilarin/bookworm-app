@@ -4,18 +4,6 @@ import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import { BookType } from "@/types";
-import dynamic from "next/dynamic";
-
-const tabs = [
-  {
-    value: "info",
-    label: "О книге",
-  },
-  {
-    value: "reviews",
-    label: "Отзывы",
-  },
-];
 
 type TabListItem = {
   value: string;
