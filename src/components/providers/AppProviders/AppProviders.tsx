@@ -5,11 +5,11 @@ import { ReactQueryProvider } from "@/components/providers/ReactQueryProvider";
 import { AuthModalProvider } from "@/components/providers/AuthModalProvider";
 import { AuthProvider } from "@/components/providers/AuthProvider";
 import { MUIProvider } from "@/components/providers/MUIProvider";
-import { verifySession } from "@/lib/server/auth";
+import { getDecodedSession } from "@/lib/server/auth";
 import { PreloadedStoreState } from "@/store";
 
 export async function AppProviders({ children }: PropsWithChildren) {
-  const decodedSession = await verifySession();
+  const decodedSession = await getDecodedSession();
 
   const initialState: PreloadedStoreState = {
     auth: {
