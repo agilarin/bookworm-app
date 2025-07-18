@@ -3,6 +3,7 @@ export async function createOrRefreshSession(idToken: string) {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      credentials: "include",
     },
     body: JSON.stringify({ idToken }),
   });
@@ -12,6 +13,7 @@ export async function createOrRefreshSession(idToken: string) {
 export async function deleteSession() {
   const response = await fetch("/api/auth/logout", {
     method: "POST",
+    credentials: "include",
   });
   return response.json();
 }

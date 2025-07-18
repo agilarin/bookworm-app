@@ -15,7 +15,7 @@ export async function AppProviders({ children }: PropsWithChildren) {
     auth: {
       loading: false,
       error: null,
-      user: {
+      user: decodedSession && {
         uid: decodedSession.uid,
         email: decodedSession.email || null,
         username: "",

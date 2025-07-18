@@ -8,7 +8,8 @@ export async function verifySession() {
   const cookieStore = await cookies();
   const session = cookieStore.get(SESSION_COOKIE_NAME)?.value;
 
-  if (!session) throw new Error("You are not logged in.");
+  if (!session) return null;
+  // if (!session) throw new Error("You are not logged in.");
 
   return authAdmin.verifySessionCookie(session, true);
 }
